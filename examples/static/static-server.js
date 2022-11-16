@@ -28,7 +28,7 @@ app.use("/backstop", express.static(__dirname + "/backstop"));
 
 app.get('/', function (req, res) {
   res.header("Content-type", "text/html");
-  const domain = req.hostname === 'localhost' ? req.protocol + "%3A%2F%2F" + req.hostname + "%3A" + port : req.protocol + "%3A%2F%2F" + req.hostname;
+  const domain = req.hostname === 'localhost' ? req.protocol + "%3A%2F%2F" + req.hostname + "%3A" + port : "https%3A%2F%2F" + req.hostname;
   return res.end("<h1>Webpub-viewer on http</h1>" + 
   "<p>This example is running with static files on the same origin. Since it is http, Service Workers should register in compatible browsers.</p>" +
   "<p><a href='/viewer/?url=" + domain + "%2FAJourneyToTheCentreOfTheEarth%2Fmanifest.json'>A Journey to the Centre of the Earth</p>" +
