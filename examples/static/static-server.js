@@ -1,4 +1,4 @@
-const https = require("https");
+const https = require("http");
 const fs = require("fs");
 const express = require("express");
 
@@ -28,8 +28,8 @@ app.use("/backstop", express.static(__dirname + "/backstop"));
 
 app.get('/', function (req, res) {
   res.header("Content-type", "text/html");
-  return res.end("<h1>Webpub-viewer on https</h1>" + 
-  "<p>This example is running with static files on the same origin. Since it is https, Service Workers should register in compatible browsers.</p>" +
-  "<p><a href='/viewer/?url=https%3A%2F%2Flocalhost%3A3333%2FAJourneyToTheCentreOfTheEarth%2Fmanifest.json'>A Journey to the Centre of the Earth</p>" +
-  "<p><a href='/viewer/?url=https%3A%2F%2Flocalhost%3A3333%2FTheCallOfTheWild%2Fmanifest.json'>The Call of the Wild</p>");
+  return res.end("<h1>Webpub-viewer on http</h1>" + 
+  "<p>This example is running with static files on the same origin. Since it is http, Service Workers should register in compatible browsers.</p>" +
+  "<p><a href='/viewer/?url=http%3A%2F%2Flocalhost%3A3333%2FAJourneyToTheCentreOfTheEarth%2Fmanifest.json'>A Journey to the Centre of the Earth</p>" +
+  "<p><a href='/viewer/?url=http%3A%2F%2Flocalhost%3A3333%2FTheCallOfTheWild%2Fmanifest.json'>The Call of the Wild</p>");
 });
