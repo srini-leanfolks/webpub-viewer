@@ -131,6 +131,7 @@ a {
       }
     }
 
+    .game-text,
     .setting-text {
       display: none;
       position: relative;
@@ -178,7 +179,6 @@ a {
       }
 
       > li:last-child {
-        margin-right: 0.625rem;
         margin-right: 2.85rem;
       }
     } // / .top
@@ -609,3 +609,4 @@ iframe {
 
 @import "toc";
 @import "settings";
+@import "games";

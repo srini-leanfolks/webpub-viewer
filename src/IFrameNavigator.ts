@@ -18,6 +18,11 @@ import EventHandler from "./EventHandler";
 import * as BrowserUtilities from "./BrowserUtilities";
 import * as HTMLUtilities from "./HTMLUtilities";
 import * as IconLib from "./IconLib";
+import GameTypeAll from './GameTypeAll';
+import GameTypeChapter from './GameTypeChapter';
+import GameTypeNone from './GameTypeNone';
+import GameTypePage from './GameTypePage';
+import GameTypeParagraph from './GameTypeParagraph';
 
 const epubReadingSystemObject: EpubReadingSystemObject = {
     name: "Webpub viewer",
@@ -58,6 +63,14 @@ const template = `
             <span class="setting-text contents" id="contents-label">Contents</span>
           </button>
           <div class="contents-view controls-view inactive" aria-hidden="true"></div>
+        </li>
+        <li>
+          <button id="games-control" class="games" aria-labelledby="games-label" aria-expanded="false" aria-haspopup="true">
+            ${IconLib.icons.games}
+            ${IconLib.icons.closeDupe}
+            <span class="game-text games" id="games-label">Games</span>
+          </button>
+          <div class="games-view controls-view inactive" aria-hidden="true"></div>
         </li>
         <li>
           <button id="settings-control" class="settings" aria-labelledby="settings-label" aria-expanded="false" aria-haspopup="true">
@@ -130,6 +143,11 @@ export interface IFrameNavigatorConfig {
     manifestUrl: URL;
     store: Store;
     cacher?: Cacher;
+    gameTypeAll: GameTypeAll;
+    gameTypeChapter: GameTypeChapter;
+    gameTypeNone: GameTypeNone;
+    gameTypePage: GameTypePage;
+    gameTypeParagraph: GameTypeParagraph;
     settings: BookSettings;
     annotator?: Annotator;
     publisher?: PublisherFont;
@@ -150,6 +168,11 @@ export default class IFrameNavigator implements Navigator {
     private manifestUrl: URL;
     private store: Store;
     private cacher: Cacher | null;
+    private gameTypeAll: GameTypeAll;
+    private gameTypeChapter: GameTypeChapter;
+    private gameTypeNone: GameTypeNone;
+    private gameTypePage: GameTypePage;
+    private gameTypeParagraph: GameTypeParagraph;
     private settings: BookSettings;
     private annotator: Annotator | null;
     private publisher: PublisherFont | null;
@@ -171,11 +194,13 @@ export default class IFrameNavigator implements Navigator {
     private previousChapterLink: HTMLAnchorElement;
     private menuControl: HTMLButtonElement;
     private contentsControl: HTMLButtonElement;
+    private gamesControl: HTMLButtonElement;
     private settingsControl: HTMLButtonElement;
     private links: HTMLUListElement;
     private linksBottom: HTMLUListElement;
     private tocView: HTMLDivElement;
     private settingsView: HTMLDivElement;
+    private gamesView: HTMLDivElement;
     private loadingMessage: HTMLDivElement;
     private errorMessage: HTMLDivElement;
     private tryAgainButton: HTMLButtonElement;
@@ -190,10 +215,14 @@ export default class IFrameNavigator implements Navigator {
     private isBeingStyled: boolean;
     private isLoading: boolean;
     private canFullscreen: boolean = (document as any).fullscreenEnabled || (document as any).webkitFullscreenEnabled || (document as any).mozFullScreenEnabled || (document as any).msFullscreenEnabled;
+    private observer: IntersectionObserver;
 
     public static async create(config: IFrameNavigatorConfig) {
         const navigator = new this(
-            config.store, config.cacher || null, config.settings, config.annotator || null,
+            config.store, config.cacher || null,
+            config.gameTypeAll, config.gameTypeChapter, config.gameTypeNone,
+            config.gameTypePage, config.gameTypeParagraph,
+            config.settings, config.annotator || null,
             config.publisher || null, config.serif || null, config.sans || null,
             config.day || null, config.sepia || null, config.night || null,
             config.paginator || null, config.scroller || null,
@@ -209,6 +238,11 @@ export default class IFrameNavigator implements Navigator {
     protected constructor(
         store: Store,
         cacher: Cacher | null = null,
+        gameTypeAll: GameTypeAll,
+        gameTypeChapter: GameTypeChapter,
+        gameTypeNone: GameTypeNone,
+        gameTypePage: GameTypePage,
+        gameTypeParagraph: GameTypeParagraph,
         settings: BookSettings,
         annotator: Annotator | null = null,
         publisher: PublisherFont | null = null,
@@ -223,9 +257,13 @@ export default class IFrameNavigator implements Navigator {
         upLinkConfig: UpLinkConfig | null = null,
         allowFullscreen: boolean | null = null
         ) {
-
         this.store = store;
         this.cacher = cacher;
+        this.gameTypeAll = gameTypeAll;
+        this.gameTypeChapter = gameTypeChapter;
+        this.gameTypeNone = gameTypeNone;
+        this.gameTypePage = gameTypePage;
+        this.gameTypeParagraph = gameTypeParagraph;
         this.settings = settings;
         this.annotator = annotator;
         this.publisher = publisher;
@@ -238,7 +276,16 @@ export default class IFrameNavigator implements Navigator {
         this.scroller = scroller;
         this.eventHandler = eventHandler || new EventHandler();
         this.upLinkConfig = upLinkConfig;
-        this.allowFullscreen = allowFullscreen
+        this.allowFullscreen = allowFullscreen;
+        this.observer = new IntersectionObserver((entry) => {
+          entry.forEach((item) => {
+              if (item.intersectionRatio > 0) {
+                  const wordArray = item.target.textContent!.split(' ');
+                  const sentence = this.wordScramble(wordArray);
+                  item.target.textContent = sentence;
+              }
+          });
+        });
     }
 
     protected async start(element: HTMLElement, manifestUrl: URL): Promise<void> {
@@ -251,10 +298,12 @@ export default class IFrameNavigator implements Navigator {
             this.previousChapterLink = HTMLUtilities.findRequiredElement(element, "a[rel=prev]") as HTMLAnchorElement;
             this.contentsControl = HTMLUtilities.findRequiredElement(element, "button.contents") as HTMLButtonElement;
             this.settingsControl = HTMLUtilities.findRequiredElement(element, "button.settings") as HTMLButtonElement;
+            this.gamesControl = HTMLUtilities.findRequiredElement(element, "button.games") as HTMLButtonElement;
             this.links = HTMLUtilities.findRequiredElement(element, "ul.links.top") as HTMLUListElement;
             this.linksBottom = HTMLUtilities.findRequiredElement(element, "ul.links.bottom") as HTMLUListElement;
             this.tocView = HTMLUtilities.findRequiredElement(element, ".contents-view") as HTMLDivElement;
             this.settingsView = HTMLUtilities.findRequiredElement(element, ".settings-view") as HTMLDivElement;
+            this.gamesView = HTMLUtilities.findRequiredElement(element, ".games-view") as HTMLDivElement;
             this.loadingMessage = HTMLUtilities.findRequiredElement(element, "div[class=loading]") as HTMLDivElement;
             this.errorMessage = HTMLUtilities.findRequiredElement(element, "div[class=error]") as HTMLDivElement;
             this.tryAgainButton = HTMLUtilities.findRequiredElement(element, "button[class=try-again]") as HTMLButtonElement;
@@ -295,8 +344,27 @@ export default class IFrameNavigator implements Navigator {
             if (this.scroller) {
                 this.scroller.bookElement = this.iframe;
             }
+            if (this.gameTypeAll) {
+                this.gameTypeAll.bookElement = this.iframe;
+            }
+            if (this.gameTypeChapter) {
+                this.gameTypeChapter.bookElement = this.iframe;
+            }
+            if (this.gameTypeNone) {
+                this.gameTypeNone.bookElement = this.iframe;
+            }
+            if (this.gameTypePage) {
+                this.gameTypePage.bookElement = this.iframe;
+            }
+            if (this.gameTypeParagraph) {
+                this.gameTypeParagraph.bookElement = this.iframe;
+            }
+
+            this.settings.renderGameControls(this.gamesView);
+            this.settings.onGameChange(this.updateGameType.bind(this));
             this.settings.renderControls(this.settingsView);
             this.settings.onFontChange(this.updateFont.bind(this));
+            this.settings.onLetterSpacingChange(this.updateLetterSpacing.bind(this));
             this.settings.onFontSizeChange(this.updateFontSize.bind(this));
             this.settings.onViewChange(this.updateBookView.bind(this));
 
@@ -305,6 +373,13 @@ export default class IFrameNavigator implements Navigator {
             if (settingsButtons && settingsButtons.length > 0) {
                 const lastSettingsButton = settingsButtons[settingsButtons.length - 1];
                 this.setupModalFocusTrap(this.settingsView, this.settingsControl, lastSettingsButton);
+            }
+
+            // Trap keyboard focus inside the games view when it's displayed.
+            const gamesButtons = this.gamesView.querySelectorAll("button");
+            if (gamesButtons && gamesButtons.length > 0) {
+                const lastSettingsButton = gamesButtons[gamesButtons.length - 1];
+                this.setupModalFocusTrap(this.gamesView, this.gamesControl, lastSettingsButton);
             }
 
             if (this.cacher) {
@@ -318,6 +393,7 @@ export default class IFrameNavigator implements Navigator {
 
             return await this.loadManifest();
         } catch (err) {
+            console.log(err);
             // There's a mismatch between the template and the selectors above,
             // or we weren't able to insert the template in the element.
             return new Promise<void>((_, reject) => reject(err)).catch(() => {});
@@ -345,6 +421,10 @@ export default class IFrameNavigator implements Navigator {
 
         this.settingsView.addEventListener("click", this.handleToggleLinksClick.bind(this));
 
+        this.gamesControl.addEventListener("click", this.handleGamesClick.bind(this));
+
+        this.gamesView.addEventListener("click", this.handleToggleLinksClick.bind(this));
+
         this.tryAgainButton.addEventListener("click", this.tryAgain.bind(this));
 
         this.goBackButton.addEventListener("click", this.goBack.bind(this));
@@ -358,6 +438,10 @@ export default class IFrameNavigator implements Navigator {
         this.settingsControl.addEventListener("keydown", this.hideSettingsOnEscape.bind(this));
 
         this.settingsView.addEventListener("keydown", this.hideSettingsOnEscape.bind(this));
+
+        this.gamesControl.addEventListener("keydown", this.hideGamesOnEscape.bind(this));
+
+        this.gamesView.addEventListener("keydown", this.hideGamesOnEscape.bind(this));
 
         window.addEventListener("keydown", this.handleKeyboardNavigation.bind(this));
 
@@ -413,11 +497,19 @@ export default class IFrameNavigator implements Navigator {
         }
     };
 
+    private updateGameType(): void {
+        this.handleGameType();
+    }
+
     private updateFont(): void {
         this.handleResize();
     }
 
     private updateFontSize(): void {
+        this.handleResize();
+    }
+
+    private updateLetterSpacing(): void {
         this.handleResize();
     }
 
@@ -625,6 +717,7 @@ export default class IFrameNavigator implements Navigator {
 
             return new Promise<void>(resolve => resolve());
         } catch (err) {
+            console.log(err);
             this.abortOnError();
             return new Promise<void>((_, reject) => reject(err)).catch(() => {});
         }
@@ -641,13 +734,21 @@ export default class IFrameNavigator implements Navigator {
                 bookViewPosition = this.newPosition.position;
                 this.newPosition = null;
             }
+            this.updateGameTypeInit();
             this.updateFont();
             this.updateFontSize();
+            this.updateLetterSpacing();
             this.updateBookView();
             this.settings.getSelectedFont().start();
             this.settings.getSelectedTheme().start();
             this.settings.getSelectedView().start(bookViewPosition);
+            this.settings.getSelectedGameType().start();
 
+            HTMLUtilities.createStylesheet(
+              this.iframe.contentDocument!.querySelector('html') as HTMLHtmlElement,
+              'game-styles',
+              '.hover-element:hover { outline: 2px solid blue; cursor: pointer; }'
+            );
 
             if (this.newElementId) {
                 this.settings.getSelectedView().goToElement(this.newElementId);
@@ -728,6 +829,11 @@ export default class IFrameNavigator implements Navigator {
 
             if (this.annotator) {
                 await this.saveCurrentReadingPosition();
+                const page = await this.annotator.getLastReadingPosition() as ReadingPosition;
+                const gameType = this.settings.getSelectedGameType();
+                if (page.position === 0 && gameType.name !== 'game-all') {
+                    this.settings.resetGameType(this.gameTypeNone);
+                }
             }
             this.hideLoadingMessage();
             this.showIframeContents();
@@ -736,6 +842,7 @@ export default class IFrameNavigator implements Navigator {
 
             return new Promise<void>(resolve => resolve());
         } catch (err) {
+            console.log(err);
             this.abortOnError();
             return new Promise<void>((_, reject) => reject(err)).catch(() => {});
         }
@@ -835,13 +942,14 @@ export default class IFrameNavigator implements Navigator {
         }
         this.contentsControl.setAttribute("aria-hidden", "true");
         this.settingsControl.setAttribute("aria-hidden", "true");
+        this.gamesControl.setAttribute("aria-hidden", "true");
         this.linksBottom.setAttribute("aria-hidden", "true");
         this.loadingMessage.setAttribute("aria-hidden", "true");
         this.errorMessage.setAttribute("aria-hidden", "true");
         this.infoTop.setAttribute("aria-hidden", "true");
         this.infoBottom.setAttribute("aria-hidden", "true");
 
-        if (control) {        
+        if (control) {
             control.setAttribute("aria-hidden", "false");
         }
         this.showElement(modal, control);
@@ -859,6 +967,7 @@ export default class IFrameNavigator implements Navigator {
         }
         this.contentsControl.setAttribute("aria-hidden", "false");
         this.settingsControl.setAttribute("aria-hidden", "false");
+        this.gamesControl.setAttribute("aria-hidden", "false");
         this.linksBottom.setAttribute("aria-hidden", "false");
         this.loadingMessage.setAttribute("aria-hidden", "false");
         this.errorMessage.setAttribute("aria-hidden", "false");
@@ -919,6 +1028,7 @@ export default class IFrameNavigator implements Navigator {
 
     private handleToggleLinksClick(event: MouseEvent | TouchEvent): void {
         this.hideTOC();
+        this.hideGames();
         this.hideSettings();
         this.toggleDisplay(this.links, this.menuControl);
         if (this.settings.getSelectedView() === this.scroller) {
@@ -1019,15 +1129,22 @@ export default class IFrameNavigator implements Navigator {
         const oldPosition = selectedView.getCurrentPosition();
 
         const fontSize = this.settings.getSelectedFontSize();
+        const letterSpacing = this.settings.getSelectedLetterSpacing();
         const body = HTMLUtilities.findRequiredIframeElement(this.iframe.contentDocument, "body") as HTMLBodyElement;
         body.style.fontSize = fontSize;
+        body.style.letterSpacing = letterSpacing;
         body.style.lineHeight = "1.5";
 
         // Disable text selection as we can’t handle this correctly anyway
         body.style.webkitUserSelect = "none";
         (body as any).style.MozUserSelect = "none";
-        body.style.msUserSelect = "none";
+        (body as any).style.msUserSelect = "none";
         body.style.userSelect = "none";
+
+        const headingArray: NodeListOf<HTMLHeadingElement> = body.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        for (let i = 0; i < headingArray.length; i++) {
+          headingArray[i].style.letterSpacing = letterSpacing;
+        }
 
         const fontSizeNumber = parseInt(fontSize.slice(0, -2));
         let sideMargin = fontSizeNumber * 2;
@@ -1082,6 +1199,154 @@ export default class IFrameNavigator implements Navigator {
         this.updatePositionInfo();
     }
 
+    private updateGameTypeInit() {
+        const name = this.settings.getSelectedGameType().name;
+        if (name === 'game-all') {
+            const iframe = document.querySelector('iframe') as HTMLIFrameElement;
+            const body = iframe.contentDocument!.querySelector('body') as HTMLBodyElement;
+            const section = body.querySelector('section') as HTMLElement;
+            const children = Array.from(section && section.children && section.children.length > 0 ? section.children : []) as HTMLElement[];
+            if (children.length > 0) {
+                const sentenceArray: string[] = [];
+                for (let i = 0; i < children.length; i++) {
+                    const wordArray = children[i].textContent!.split(' ');
+                    const sentence = this.wordScramble(wordArray);
+                    sentenceArray.push(sentence);
+                }
+                children.forEach((item, index) => {
+                    item.textContent = sentenceArray[index];
+                });
+            }
+        }
+    }
+
+    private wordScramble(wordArray: string[]): string {
+        const allWords = [];
+        for (let j = 0; j < wordArray.length; j++) {
+            const words = wordArray[j].replace(
+              /\b([a-z])([a-z]+)([a-z])\b/gi,
+              function (m, p1, p2, p3) {
+                if (m.length <= 3) {
+                  return m;
+                }
+                if (m.length === 4) {
+                  return p1 + p2.charAt(1) + p2.charAt(0) + p3;
+                }
+                const b = p2.split(/\B/);
+                for (
+                  let i = b.length, j, k;
+                  i;
+                  j = Math.round(Math.random() * i), k = b[--i], b[i] = b[j], b[j] = k
+                );
+                return p1 + b.join('') + p3;
+              }
+            );
+            allWords.push(words);
+        }
+        return allWords.join(' ');
+    }
+
+    private handleGameType() {
+        const iframe = HTMLUtilities.findRequiredIframeElement(this.iframe.contentDocument, "body") as HTMLBodyElement;
+        const section = iframe.querySelector('section') as HTMLElement;
+        const name = this.settings.getSelectedGameType().name;
+        const child = Array.from(section && section.children && section.children.length > 0 ? section.children : []) as HTMLElement[];
+        function wordScramble(wordArray: string[]): string {
+            const allWords = [];
+            for (let j = 0; j < wordArray.length; j++) {
+                const words = wordArray[j].replace(
+                  /\b([a-z])([a-z]+)([a-z])\b/gi,
+                  function (m, p1, p2, p3) {
+                    if (m.length <= 3) {
+                      return m;
+                    }
+                    if (m.length === 4) {
+                      return p1 + p2.charAt(1) + p2.charAt(0) + p3;
+                    }
+                    const b = p2.split(/\B/);
+                    for (
+                      let i = b.length, j, k;
+                      i;
+                      j = Math.round(Math.random() * i), k = b[--i], b[i] = b[j], b[j] = k
+                    );
+                    return p1 + b.join('') + p3;
+                  }
+                );
+                allWords.push(words);
+            }
+            return allWords.join(' ');
+        }
+        if (child.length > 0) {
+            if (name === 'game-none') {
+                child.forEach(function (element) {
+                    element.classList.remove('hover-element');
+                    element.removeEventListener('click', clickEvent);
+                });
+                window.location.reload();
+            } else if (name === 'game-paragraph') {
+                child.forEach(function (element) {
+                    element.classList.add('hover-element');
+                    element.addEventListener('click', clickEvent);
+                });
+            } else if (name === 'game-chapter') {
+                const sentenceArray: string[] = [];
+                for (let i = 0; i < child.length; i++) {
+                    const wordArray = child[i].textContent!.split(' ');
+                    const sentence = this.wordScramble(wordArray);
+                    sentenceArray.push(sentence);
+                }
+                child.forEach((item, index) => {
+                    item.textContent = sentenceArray[index];
+                });
+            } else if (name === 'game-page') {
+                child.forEach((element) => {
+                  this.observer.observe(element);
+                });
+            } else if (name === 'game-all') {
+                this.updateGameTypeInit();
+            } else {
+                child.forEach(function (element) {
+                    element.addEventListener('click', clickEvent);
+                });
+            }
+            setTimeout(() => {
+                child.forEach((element) => {
+                  this.observer.unobserve(element);
+                });
+            }, 2000);
+        }
+        function clickEvent(event: MouseEvent) {
+            const iframe = document.querySelector('iframe') as HTMLIFrameElement;
+            const body = iframe.contentDocument!.querySelector('body') as HTMLBodyElement;
+            const section = body.querySelector('section') as HTMLElement;
+            const child1 = Array.from(section && section.children && section.children.length > 0 ? section.children : []) as HTMLElement[];
+            if (child1.length > 0) {
+                child1.forEach(function (element) {
+                    element.classList.remove('hover-element');
+                    element.removeEventListener('click', clickEvent);
+                });
+            }
+            const element = event.currentTarget as HTMLElement;
+            const children = Array.from(element && element.children && element.children.length > 0 ? element.children : []) as HTMLElement[];
+            const regex = new RegExp(/h1|h2|h3|h4|h5|h6/g);
+            const data = regex.exec(element.tagName);
+            if (children.length > 0 && !data) {
+                const sentenceArray: string[] = [];
+                for (let i = 0; i < children.length; i++) {
+                  const wordArray = children[i].textContent!.split(' ');
+                  const sentence = wordScramble(wordArray);
+                  sentenceArray.push(sentence);
+                }
+                children.forEach((item, index) => {
+                  item.textContent = sentenceArray[index];
+                });
+            } else if (element.innerText !== '') {
+                const wordArray = element.innerText.split(' ');
+                element.innerText = wordScramble(wordArray);
+            }
+        }
+    }
+
     private updatePositionInfo() {
         if (this.settings.getSelectedView() === this.paginator) {
             const currentPage = Math.round(this.paginator.getCurrentPage());
@@ -1117,6 +1382,7 @@ export default class IFrameNavigator implements Navigator {
     }
 
     private handleContentsClick(event: MouseEvent): void {
+        this.hideGames();
         this.hideSettings();
         this.toggleModal(this.tocView, this.contentsControl);
         // While the TOC is displayed, prevent scrolling in the book.
@@ -1156,8 +1422,17 @@ export default class IFrameNavigator implements Navigator {
         }
     }
 
+    private handleGamesClick(event: MouseEvent): void {
+        this.hideTOC();
+        this.hideSettings();
+        this.toggleModal(this.gamesView, this.gamesControl);
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
     private handleSettingsClick(event: MouseEvent): void {
         this.hideTOC();
+        this.hideGames();
         this.toggleModal(this.settingsView, this.settingsControl);
         event.preventDefault();
         event.stopPropagation();
@@ -1167,10 +1442,21 @@ export default class IFrameNavigator implements Navigator {
         this.hideModal(this.settingsView, this.settingsControl);
     }
 
+    private hideGames(): void {
+        this.hideModal(this.gamesView, this.gamesControl);
+    }
+
     private hideSettingsOnEscape(event: KeyboardEvent) {
         const ESCAPE_KEY = 27;
         if (this.isDisplayed(this.settingsView) && event.keyCode === ESCAPE_KEY) {
             this.hideSettings();
+        }
+    }
+
+    private hideGamesOnEscape(event: KeyboardEvent) {
+        const ESCAPE_KEY = 27;
+        if (this.isDisplayed(this.gamesView) && event.keyCode === ESCAPE_KEY) {
+            this.hideGames();
         }
     }
 

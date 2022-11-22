@@ -33,6 +33,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 define("Annotator", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -153,8 +163,13 @@ define("IconLib", ["require", "exports"], function (require, exports) {
         "next": iconTemplate("next-icon", "Next Chapter", "<path d=\"M6.49 20.13l1.77 1.77 9.9-9.9-9.9-9.9-1.77 1.77L14.62 12l-8.13 8.13z\"/>"),
         "previous": iconTemplate("previous-icon", "Previous Chapter", "<path d=\"M17.51 3.87L15.73 2.1 5.84 12l9.9 9.9 1.77-1.77L9.38 12l8.13-8.13z\"/>"),
         "settings": iconTemplate("settings-icon", "Settings", "<path d=\"M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.09-.16-.26-.25-.44-.25-.06 0-.12.01-.17.03l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.06-.02-.12-.03-.18-.03-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.09.16.26.25.44.25.06 0 .12-.01.17-.03l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73 0 .21-.02.43-.05.73l-.14 1.13.89.7 1.08.84-.7 1.21-1.27-.51-1.04-.42-.9.68c-.43.32-.84.56-1.25.73l-1.06.43-.16 1.13-.2 1.35h-1.4l-.19-1.35-.16-1.13-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7-1.06.43-1.27.51-.7-1.21 1.08-.84.89-.7-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13-.89-.7-1.08-.84.7-1.21 1.27.51 1.04.42.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43.16-1.13.2-1.35h1.39l.19 1.35.16 1.13 1.06.43c.43.18.83.41 1.23.71l.91.7 1.06-.43 1.27-.51.7 1.21-1.07.85-.89.7.14 1.13zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z\"/>", "icon open"),
+        "games": iconTemplate("games-icon", "games", "<path d=\"M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.09-.16-.26-.25-.44-.25-.06 0-.12.01-.17.03l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.06-.02-.12-.03-.18-.03-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.09.16.26.25.44.25.06 0 .12-.01.17-.03l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73 0 .21-.02.43-.05.73l-.14 1.13.89.7 1.08.84-.7 1.21-1.27-.51-1.04-.42-.9.68c-.43.32-.84.56-1.25.73l-1.06.43-.16 1.13-.2 1.35h-1.4l-.19-1.35-.16-1.13-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7-1.06.43-1.27.51-.7-1.21 1.08-.84.89-.7-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13-.89-.7-1.08-.84.7-1.21 1.27.51 1.04.42.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43.16-1.13.2-1.35h1.39l.19 1.35.16 1.13 1.06.43c.43.18.83.41 1.23.71l.91.7 1.06-.43 1.27-.51.7 1.21-1.07.85-.89.7.14 1.13zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z\"/>", "icon open"),
         "toc": iconTemplate("toc-icon", "Table of Contents", "<path d=\"M3 9h14V7H3v2zm0 4h14v-2H3v2zm0 4h14v-2H3v2zm16 0h2v-2h-2v2zm0-10v2h2V7h-2zm0 6h2v-2h-2v2z\"/>", "icon open")
     };
+});
+define("Games", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
 });
 define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], function (require, exports, HTMLUtilities, IconLib) {
     "use strict";
@@ -162,28 +177,36 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
     var template = function (sections) { return "\n    <ul class=\"settings-menu\" role=\"menu\">\n        " + sections + "\n    </ul>\n"; };
     var sectionTemplate = function (options) { return "\n    <li><ul class=\"settings-options\">\n        " + options + "\n    </ul></li>\n"; };
     var optionTemplate = function (liClassName, buttonClassName, label, role, svgIcon, buttonId) { return "\n    <li class='" + liClassName + "'><button id='" + buttonId + "' class='" + buttonClassName + "' role='" + role + "' tabindex=-1>" + label + svgIcon + "</button></li>\n"; };
+    var templateGame = function (sections) { return "\n    <ul class=\"games-menu\" role=\"menu\">\n        " + sections + "\n    </ul>\n"; };
+    var sectionTemplateGame = function (options) { return "\n    <li><ul class=\"games-options\">\n        " + options + "\n    </ul></li>\n"; };
+    var optionTemplateGame = function (liClassName, buttonClassName, label, role, svgIcon, buttonId) { return "\n    <li class='" + liClassName + "'><button id='" + buttonId + "' class='" + buttonClassName + "' role='" + role + "' tabindex=-1>" + label + svgIcon + "</button></li>\n"; };
     var offlineTemplate = "\n    <li>\n        <div class='offline-status'></div>\n    </li>\n";
     var BookSettings = /** @class */ (function () {
-        function BookSettings(store, bookFonts, fontSizes, bookThemes, bookViews) {
+        function BookSettings(store, bookFonts, fontSizes, letterSpacings, bookThemes, bookViews, gameTypes) {
             this.fontChangeCallback = function () { };
             this.fontSizeChangeCallback = function () { };
+            this.letterSpacingChangeCallback = function () { };
             this.themeChangeCallback = function () { };
             this.viewChangeCallback = function () { };
+            this.gameChangeCallback = function () { };
             this.store = store;
             this.bookFonts = bookFonts;
             this.fontSizes = fontSizes;
+            this.letterSpacings = letterSpacings;
             this.bookThemes = bookThemes;
             this.bookViews = bookViews;
+            this.gameTypes = gameTypes;
         }
         BookSettings.create = function (config) {
             return __awaiter(this, void 0, void 0, function () {
-                var fontSizes, settings;
+                var fontSizes, letterSpacing, settings;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             fontSizes = config.fontSizesInPixels.map(function (fontSize) { return fontSize + "px"; });
-                            settings = new this(config.store, config.bookFonts, fontSizes, config.bookThemes, config.bookViews);
-                            return [4 /*yield*/, settings.initializeSelections(config.defaultFontSizeInPixels ? config.defaultFontSizeInPixels + "px" : undefined)];
+                            letterSpacing = config.letterSpacingInPixels.map(function (spacing) { return spacing + "px"; });
+                            settings = new this(config.store, config.bookFonts, fontSizes, letterSpacing, config.bookThemes, config.bookViews, config.gameTypes);
+                            return [4 /*yield*/, settings.initializeSelections(config.defaultFontSizeInPixels ? config.defaultFontSizeInPixels + "px" : undefined, config.defaultLetterSpacingInPixels ? config.defaultLetterSpacingInPixels + "px" : undefined)];
                         case 1:
                             _a.sent();
                             return [2 /*return*/, settings];
@@ -191,17 +214,17 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                 });
             });
         };
-        BookSettings.prototype.initializeSelections = function (defaultFontSize) {
+        BookSettings.prototype.initializeSelections = function (defaultFontSize, defaultLetterSpacing) {
             return __awaiter(this, void 0, void 0, function () {
-                var selectedFont, selectedFontName, _i, _a, bookFont, selectedFontSize, selectedFontSizeIsAvailable, averageFontSizeIndex, selectedTheme, selectedThemeName, _b, _c, bookTheme, selectedView, selectedViewName, _d, _e, bookView;
-                return __generator(this, function (_f) {
-                    switch (_f.label) {
+                var selectedFont, selectedFontName, _i, _a, bookFont, selectedFontSize, selectedFontSizeIsAvailable, averageFontSizeIndex, selectedLetterSpacing, selectedLetterSpacingIsAvailable, selectedTheme, selectedThemeName, _b, _c, bookTheme, selectedView, selectedViewName, _d, _e, bookView, selectedType, selectedGameType, _f, _g, gameType;
+                return __generator(this, function (_h) {
+                    switch (_h.label) {
                         case 0:
                             if (!(this.bookFonts.length >= 1)) return [3 /*break*/, 2];
                             selectedFont = this.bookFonts[0];
                             return [4 /*yield*/, this.store.get(BookSettings.SELECTED_FONT_KEY)];
                         case 1:
-                            selectedFontName = _f.sent();
+                            selectedFontName = _h.sent();
                             if (selectedFontName) {
                                 for (_i = 0, _a = this.bookFonts; _i < _a.length; _i++) {
                                     bookFont = _a[_i];
@@ -212,12 +235,12 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                                 }
                             }
                             this.selectedFont = selectedFont;
-                            _f.label = 2;
+                            _h.label = 2;
                         case 2:
                             if (!(this.fontSizes.length >= 1)) return [3 /*break*/, 4];
                             return [4 /*yield*/, this.store.get(BookSettings.SELECTED_FONT_SIZE_KEY)];
                         case 3:
-                            selectedFontSize = _f.sent();
+                            selectedFontSize = _h.sent();
                             selectedFontSizeIsAvailable = (selectedFontSize && this.fontSizes.indexOf(selectedFontSize) !== -1);
                             // If not, or the user selected a size that's no longer an option, is there a default font size?
                             if ((!selectedFontSize || !selectedFontSizeIsAvailable) && defaultFontSize) {
@@ -230,13 +253,30 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                                 selectedFontSize = this.fontSizes[averageFontSizeIndex];
                             }
                             this.selectedFontSize = selectedFontSize;
-                            _f.label = 4;
+                            _h.label = 4;
                         case 4:
-                            if (!(this.bookThemes.length >= 1)) return [3 /*break*/, 6];
+                            if (!(this.letterSpacings.length >= 1)) return [3 /*break*/, 6];
+                            return [4 /*yield*/, this.store.get(BookSettings.SELECTED_LETTER_SPACING_KEY)];
+                        case 5:
+                            selectedLetterSpacing = _h.sent();
+                            selectedLetterSpacingIsAvailable = (selectedLetterSpacing && this.letterSpacings.indexOf(selectedLetterSpacing) !== -1);
+                            // If not, or the user selected a size that's no longer an option, is there a default letter spacing?
+                            if ((!selectedLetterSpacing || !selectedLetterSpacingIsAvailable) && defaultLetterSpacing) {
+                                selectedLetterSpacing = defaultLetterSpacing;
+                                selectedLetterSpacingIsAvailable = (selectedLetterSpacing && this.letterSpacings.indexOf(selectedLetterSpacing) !== -1);
+                            }
+                            // If there's no selection and no default, pick a letter spacing in the middle of the options.
+                            if (!selectedLetterSpacing || !selectedLetterSpacingIsAvailable) {
+                                selectedLetterSpacing = this.letterSpacings[0];
+                            }
+                            this.selectedLetterSpacing = selectedLetterSpacing;
+                            _h.label = 6;
+                        case 6:
+                            if (!(this.bookThemes.length >= 1)) return [3 /*break*/, 8];
                             selectedTheme = this.bookThemes[0];
                             return [4 /*yield*/, this.store.get(BookSettings.SELECTED_THEME_KEY)];
-                        case 5:
-                            selectedThemeName = _f.sent();
+                        case 7:
+                            selectedThemeName = _h.sent();
                             if (selectedThemeName) {
                                 for (_b = 0, _c = this.bookThemes; _b < _c.length; _b++) {
                                     bookTheme = _c[_b];
@@ -247,13 +287,13 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                                 }
                             }
                             this.selectedTheme = selectedTheme;
-                            _f.label = 6;
-                        case 6:
-                            if (!(this.bookViews.length >= 1)) return [3 /*break*/, 8];
+                            _h.label = 8;
+                        case 8:
+                            if (!(this.bookViews.length >= 1)) return [3 /*break*/, 10];
                             selectedView = this.bookViews[0];
                             return [4 /*yield*/, this.store.get(BookSettings.SELECTED_VIEW_KEY)];
-                        case 7:
-                            selectedViewName = _f.sent();
+                        case 9:
+                            selectedViewName = _h.sent();
                             if (selectedViewName) {
                                 for (_d = 0, _e = this.bookViews; _d < _e.length; _d++) {
                                     bookView = _e[_d];
@@ -264,8 +304,25 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                                 }
                             }
                             this.selectedView = selectedView;
-                            _f.label = 8;
-                        case 8: return [2 /*return*/];
+                            _h.label = 10;
+                        case 10:
+                            if (!(this.gameTypes.length >= 1)) return [3 /*break*/, 12];
+                            selectedType = this.gameTypes[0];
+                            return [4 /*yield*/, this.store.get(BookSettings.SELECTED_GAME_KEY)];
+                        case 11:
+                            selectedGameType = _h.sent();
+                            if (selectedGameType && selectedGameType === 'game-all') {
+                                for (_f = 0, _g = this.gameTypes; _f < _g.length; _f++) {
+                                    gameType = _g[_f];
+                                    if (gameType.name === selectedGameType) {
+                                        selectedType = gameType;
+                                        break;
+                                    }
+                                }
+                            }
+                            this.selectedType = selectedType;
+                            _h.label = 12;
+                        case 12: return [2 /*return*/];
                     }
                 });
             });
@@ -279,8 +336,12 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                 sections.push(sectionTemplate(fontOptions.join("")));
             }
             if (this.fontSizes.length > 1) {
-                var fontSizeOptions = optionTemplate("font-setting", "decrease", "A-", "menuitem", "", "decrease-font") + optionTemplate("font-setting", "increase", "A+", "menuitem", "", "increase-font");
+                var fontSizeOptions = optionTemplate("font-setting", "decrease", "SIZE-", "menuitem", "", "decrease-font") + optionTemplate("font-setting", "increase", "SIZE+", "menuitem", "", "increase-font");
                 sections.push(sectionTemplate(fontSizeOptions));
+            }
+            if (this.letterSpacings.length > 1) {
+                var letterSpacingOptions = optionTemplate("font-setting-spacing", "decrease-spacing", "SPACE-", "menuitem", "", "decrease-spacing") + optionTemplate("font-setting-spacing", "increase-spacing", "SPACE+", "menuitem", "", "increase-spacing");
+                sections.push(sectionTemplate(letterSpacingOptions));
             }
             if (this.bookThemes.length > 1) {
                 var themeOptions = this.bookThemes.map(function (bookTheme) {
@@ -312,18 +373,26 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                 }
                 this.updateFontSizeButtons();
             }
+            this.letterSpacingButtons = {};
+            if (this.letterSpacings.length > 1) {
+                for (var _d = 0, _e = ["decrease-spacing", "increase-spacing"]; _d < _e.length; _d++) {
+                    var letterSpacingName = _e[_d];
+                    this.letterSpacingButtons[letterSpacingName] = HTMLUtilities.findRequiredElement(element, "button[class=" + letterSpacingName + "]");
+                }
+                this.updateLetterSpacingButtons();
+            }
             this.themeButtons = {};
             if (this.bookThemes.length > 1) {
-                for (var _d = 0, _e = this.bookThemes; _d < _e.length; _d++) {
-                    var bookTheme = _e[_d];
+                for (var _f = 0, _g = this.bookThemes; _f < _g.length; _f++) {
+                    var bookTheme = _g[_f];
                     this.themeButtons[bookTheme.name] = HTMLUtilities.findRequiredElement(element, "button[class=" + bookTheme.name + "]");
                 }
                 this.updateThemeButtons();
             }
             this.viewButtons = {};
             if (this.bookViews.length > 1) {
-                for (var _f = 0, _g = this.bookViews; _f < _g.length; _f++) {
-                    var bookView = _g[_f];
+                for (var _h = 0, _j = this.bookViews; _h < _j.length; _h++) {
+                    var bookView = _j[_h];
                     this.viewButtons[bookView.name] = HTMLUtilities.findRequiredElement(element, "button[class=" + bookView.name + "]");
                 }
                 this.updateViewButtons();
@@ -335,17 +404,41 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                 event.stopPropagation();
             });
         };
+        BookSettings.prototype.renderGameControls = function (element) {
+            var sections = [];
+            if (this.gameTypes && this.gameTypes.length > 1) {
+                var gameOptions = this.gameTypes.map(function (gameType) {
+                    return optionTemplateGame('game-types', gameType.name, gameType.label, 'menuitem', IconLib.icons.checkDupe, gameType.name);
+                });
+                sections.push(sectionTemplateGame(gameOptions.join('')));
+            }
+            element.innerHTML = templateGame(sections.join(''));
+            this.gameButtons = {};
+            if (this.gameTypes.length > 1) {
+                for (var _i = 0, _a = this.gameTypes; _i < _a.length; _i++) {
+                    var gameType = _a[_i];
+                    this.gameButtons[gameType.name] = HTMLUtilities.findRequiredElement(element, 'button[class=' + gameType.name + ']');
+                }
+                this.updateGameButtons();
+            }
+        };
         BookSettings.prototype.onFontChange = function (callback) {
             this.fontChangeCallback = callback;
         };
         BookSettings.prototype.onFontSizeChange = function (callback) {
             this.fontSizeChangeCallback = callback;
         };
+        BookSettings.prototype.onLetterSpacingChange = function (callback) {
+            this.letterSpacingChangeCallback = callback;
+        };
         BookSettings.prototype.onThemeChange = function (callback) {
             this.themeChangeCallback = callback;
         };
         BookSettings.prototype.onViewChange = function (callback) {
             this.viewChangeCallback = callback;
+        };
+        BookSettings.prototype.onGameChange = function (callback) {
+            this.gameChangeCallback = callback;
         };
         BookSettings.prototype.setupEvents = function () {
             var _this = this;
@@ -392,6 +485,30 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                     event.preventDefault();
                 });
             }
+            if (this.letterSpacings.length > 1) {
+                this.letterSpacingButtons["decrease-spacing"].addEventListener("click", function (event) {
+                    var currentLetterSpacingIndex = _this.letterSpacings.indexOf(_this.selectedLetterSpacing);
+                    if (currentLetterSpacingIndex > 0) {
+                        var newLetterSpacing = _this.letterSpacings[currentLetterSpacingIndex - 1];
+                        _this.selectedLetterSpacing = newLetterSpacing;
+                        _this.letterSpacingChangeCallback();
+                        _this.updateLetterSpacingButtons();
+                        _this.storeSelectedLetterSpacing(newLetterSpacing);
+                    }
+                    event.preventDefault();
+                });
+                this.letterSpacingButtons["increase-spacing"].addEventListener("click", function (event) {
+                    var currentLetterSpacingIndex = _this.letterSpacings.indexOf(_this.selectedLetterSpacing);
+                    if (currentLetterSpacingIndex < _this.letterSpacings.length - 1) {
+                        var newLetterSpacing = _this.letterSpacings[currentLetterSpacingIndex + 1];
+                        _this.selectedLetterSpacing = newLetterSpacing;
+                        _this.letterSpacingChangeCallback();
+                        _this.updateLetterSpacingButtons();
+                        _this.storeSelectedLetterSpacing(newLetterSpacing);
+                    }
+                    event.preventDefault();
+                });
+            }
             var _loop_2 = function (theme) {
                 var button = this_2.themeButtons[theme.name];
                 if (button) {
@@ -431,6 +548,25 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                 var view = _e[_d];
                 _loop_3(view);
             }
+            var _loop_4 = function (gameType) {
+                var button = this_4.gameButtons[gameType.name];
+                if (button) {
+                    button.addEventListener('click', function (event) {
+                        _this.selectedType.stop();
+                        gameType.start();
+                        _this.selectedType = gameType;
+                        _this.updateGameButtons();
+                        _this.storeSelectedGameType(gameType);
+                        _this.gameChangeCallback();
+                        event.preventDefault();
+                    });
+                }
+            };
+            var this_4 = this;
+            for (var _f = 0, _g = this.gameTypes; _f < _g.length; _f++) {
+                var gameType = _g[_f];
+                _loop_4(gameType);
+            }
         };
         BookSettings.prototype.updateFontButtons = function () {
             for (var _i = 0, _a = this.bookFonts; _i < _a.length; _i++) {
@@ -460,6 +596,21 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                 this.fontSizeButtons["increase"].className = "increase";
             }
         };
+        BookSettings.prototype.updateLetterSpacingButtons = function () {
+            var currentLetterSpacingIndex = this.letterSpacings.indexOf(this.selectedLetterSpacing);
+            if (currentLetterSpacingIndex === 0) {
+                this.letterSpacingButtons["decrease-spacing"].className = "decrease-spacing disabled";
+            }
+            else {
+                this.letterSpacingButtons["decrease-spacing"].className = "decrease-spacing";
+            }
+            if (currentLetterSpacingIndex === this.letterSpacings.length - 1) {
+                this.letterSpacingButtons["increase-spacing"].className = "increase-spacing disabled";
+            }
+            else {
+                this.letterSpacingButtons["increase-spacing"].className = "increase-spacing";
+            }
+        };
         BookSettings.prototype.updateThemeButtons = function () {
             for (var _i = 0, _a = this.bookThemes; _i < _a.length; _i++) {
                 var theme = _a[_i];
@@ -486,17 +637,43 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                 }
             }
         };
+        BookSettings.prototype.updateGameButtons = function () {
+            for (var _i = 0, _a = this.gameTypes; _i < _a.length; _i++) {
+                var gameType = _a[_i];
+                if (gameType === this.selectedType) {
+                    this.gameButtons[gameType.name].className = gameType.name + " active";
+                    this.gameButtons[gameType.name].setAttribute("aria-label", gameType.label + " mode enabled");
+                }
+                else {
+                    this.gameButtons[gameType.name].className = gameType.name;
+                    this.gameButtons[gameType.name].setAttribute("aria-label", gameType.label + " mode disabled");
+                }
+            }
+        };
+        BookSettings.prototype.resetGameType = function (gameType) {
+            this.selectedType.stop();
+            gameType.start();
+            this.selectedType = gameType;
+            this.updateGameButtons();
+            this.storeSelectedGameType(gameType);
+        };
         BookSettings.prototype.getSelectedFont = function () {
             return this.selectedFont;
         };
         BookSettings.prototype.getSelectedFontSize = function () {
             return this.selectedFontSize;
         };
+        BookSettings.prototype.getSelectedLetterSpacing = function () {
+            return this.selectedLetterSpacing;
+        };
         BookSettings.prototype.getSelectedTheme = function () {
             return this.selectedTheme;
         };
         BookSettings.prototype.getSelectedView = function () {
             return this.selectedView;
+        };
+        BookSettings.prototype.getSelectedGameType = function () {
+            return this.selectedType;
         };
         BookSettings.prototype.getOfflineStatusElement = function () {
             return this.offlineStatusElement;
@@ -515,6 +692,13 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                 });
             });
         };
+        BookSettings.prototype.storeSelectedLetterSpacing = function (letterSpacing) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, this.store.set(BookSettings.SELECTED_LETTER_SPACING_KEY, letterSpacing)];
+                });
+            });
+        };
         BookSettings.prototype.storeSelectedTheme = function (theme) {
             return __awaiter(this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
@@ -529,10 +713,19 @@ define("BookSettings", ["require", "exports", "HTMLUtilities", "IconLib"], funct
                 });
             });
         };
+        BookSettings.prototype.storeSelectedGameType = function (gameType) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, this.store.set(BookSettings.SELECTED_GAME_KEY, gameType.name)];
+                });
+            });
+        };
         BookSettings.SELECTED_FONT_KEY = "settings-selected-font";
         BookSettings.SELECTED_FONT_SIZE_KEY = "settings-selected-font-size";
+        BookSettings.SELECTED_LETTER_SPACING_KEY = "settings-selected-letter-spacing";
         BookSettings.SELECTED_THEME_KEY = "settings-selected-theme";
         BookSettings.SELECTED_VIEW_KEY = "settings-selected-view";
+        BookSettings.SELECTED_GAME_KEY = 'games-selected-type';
         return BookSettings;
     }());
     exports.default = BookSettings;
@@ -1165,6 +1358,106 @@ define("EventHandler", ["require", "exports", "BrowserUtilities"], function (req
     }());
     exports.default = EventHandler;
 });
+define("GameTypeAll", ["require", "exports", "HTMLUtilities"], function (require, exports, HTMLUtilities) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var GameTypeAll = /** @class */ (function () {
+        function GameTypeAll() {
+            this.name = "game-all";
+            this.label = "All";
+        }
+        GameTypeAll.prototype.start = function () {
+            var rootElement = document.documentElement;
+            HTMLUtilities.setAttr(rootElement, "data-game-type", "all");
+        };
+        GameTypeAll.prototype.stop = function () {
+            var rootElement = document.documentElement;
+            HTMLUtilities.removeAttr(rootElement, "data-game-type");
+        };
+        return GameTypeAll;
+    }());
+    exports.default = GameTypeAll;
+});
+define("GameTypeChapter", ["require", "exports", "HTMLUtilities"], function (require, exports, HTMLUtilities) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var GameTypeChapter = /** @class */ (function () {
+        function GameTypeChapter() {
+            this.name = "game-chapter";
+            this.label = "Chapter";
+        }
+        GameTypeChapter.prototype.start = function () {
+            var rootElement = document.documentElement;
+            HTMLUtilities.setAttr(rootElement, "data-game-type", "chapter");
+        };
+        GameTypeChapter.prototype.stop = function () {
+            var rootElement = document.documentElement;
+            HTMLUtilities.removeAttr(rootElement, "data-game-type");
+        };
+        return GameTypeChapter;
+    }());
+    exports.default = GameTypeChapter;
+});
+define("GameTypeNone", ["require", "exports", "HTMLUtilities"], function (require, exports, HTMLUtilities) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var GameTypeNone = /** @class */ (function () {
+        function GameTypeNone() {
+            this.name = "game-none";
+            this.label = "None";
+        }
+        GameTypeNone.prototype.start = function () {
+            var rootElement = document.documentElement;
+            HTMLUtilities.setAttr(rootElement, "data-game-type", "none");
+        };
+        GameTypeNone.prototype.stop = function () {
+            var rootElement = document.documentElement;
+            HTMLUtilities.removeAttr(rootElement, "data-game-type");
+        };
+        return GameTypeNone;
+    }());
+    exports.default = GameTypeNone;
+});
+define("GameTypePage", ["require", "exports", "HTMLUtilities"], function (require, exports, HTMLUtilities) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var GameTypePage = /** @class */ (function () {
+        function GameTypePage() {
+            this.name = "game-page";
+            this.label = "Page";
+        }
+        GameTypePage.prototype.start = function () {
+            var rootElement = document.documentElement;
+            HTMLUtilities.setAttr(rootElement, "data-game-type", "page");
+        };
+        GameTypePage.prototype.stop = function () {
+            var rootElement = document.documentElement;
+            HTMLUtilities.removeAttr(rootElement, "data-game-type");
+        };
+        return GameTypePage;
+    }());
+    exports.default = GameTypePage;
+});
+define("GameTypeParagraph", ["require", "exports", "HTMLUtilities"], function (require, exports, HTMLUtilities) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var GameTypeParagraph = /** @class */ (function () {
+        function GameTypeParagraph() {
+            this.name = "game-paragraph";
+            this.label = "Paragraph";
+        }
+        GameTypeParagraph.prototype.start = function () {
+            var rootElement = document.documentElement;
+            HTMLUtilities.setAttr(rootElement, "data-game-type", "paragraph");
+        };
+        GameTypeParagraph.prototype.stop = function () {
+            var rootElement = document.documentElement;
+            HTMLUtilities.removeAttr(rootElement, "data-game-type");
+        };
+        return GameTypeParagraph;
+    }());
+    exports.default = GameTypeParagraph;
+});
 define("Navigator", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -1497,10 +1790,10 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
     };
     var epubReadingSystem = Object.freeze(epubReadingSystemObject);
     var upLinkTemplate = function (href, label, ariaLabel) { return "\n  <a rel=\"up\" href='" + href + "' aria-label=\"" + ariaLabel + "\">\n    <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"" + IconLib.WIDTH_ATTR + "\" height=\"" + IconLib.HEIGHT_ATTR + "\" viewBox=\"" + IconLib.VIEWBOX_ATTR + "\" aria-labelledby=\"up-label\" preserveAspectRatio=\"xMidYMid meet\" role=\"img\" class=\"icon\">\n      <title id=\"up-label\">" + label + "</title>\n      " + IconLib.icons.home + "\n    </svg>\n    <span class=\"setting-text up\">" + label + "</span>\n  </a>\n"; };
-    var template = "\n  <nav class=\"publication\">\n    <div class=\"controls-trigger\">\n      <button class=\"trigger\" aria-haspopup=\"true\" aria-expanded=\"true\">\n        " + IconLib.icons.menu + "\n      </button>\n    </div>\n    <div class=\"controls\">\n        " + IconLib.icons.closeOriginal + "\n        " + IconLib.icons.checkOriginal + "\n      <a href=\"#settings-control\" class=\"scrolling-suggestion\" style=\"display: none\">\n          We recommend scrolling mode for use with screen readers and keyboard navigation.\n          Go to settings to switch to scrolling mode.\n      </a>\n      <ul class=\"links top active\">\n        <li>\n          <button class=\"contents disabled\" aria-labelledby=\"contents-label\" aria-haspopup=\"true\" aria-expanded=\"false\">\n            " + IconLib.icons.toc + "\n            " + IconLib.icons.closeDupe + "\n            <span class=\"setting-text contents\" id=\"contents-label\">Contents</span>\n          </button>\n          <div class=\"contents-view controls-view inactive\" aria-hidden=\"true\"></div>\n        </li>\n        <li>\n          <button id=\"settings-control\" class=\"settings\" aria-labelledby=\"settings-label\" aria-expanded=\"false\" aria-haspopup=\"true\">\n            " + IconLib.icons.settings + "\n            " + IconLib.icons.closeDupe + "\n            <span class=\"setting-text settings\" id=\"settings-label\">Settings</span>\n          </button>\n          <div class=\"settings-view controls-view inactive\" aria-hidden=\"true\"></div>\n        </li>\n      </ul>\n    </div>\n    <!-- /controls -->\n  </nav>\n  <main style=\"overflow: hidden\" tabindex=-1>\n    <div class=\"loading\" style=\"display:none;\">\n      " + IconLib.icons.loading + "\n    </div>\n    <div class=\"error\" style=\"display:none;\">\n      <span>\n        " + IconLib.icons.error + "\n      </span>\n      <span>There was an error loading this page.</span>\n      <button class=\"go-back\">Go back</button>\n      <button class=\"try-again\">Try again</button>\n    </div>\n    <div class=\"info top\">\n      <span class=\"book-title\"></span>\n    </div>\n    <iframe allowtransparency=\"true\" title=\"book text\" style=\"border:0; overflow: hidden;\"></iframe>\n    <div class=\"info bottom\">\n      <span class=\"chapter-position\"></span>\n      <span class=\"chapter-title\"></span>\n    </div>\n  </main>\n  <nav class=\"publication\">\n    <div class=\"controls\">\n      <ul class=\"links bottom active\">\n        <li>\n          <a rel=\"prev\" class=\"disabled\" role=\"button\" aria-labelledby=\"previous-label\">\n          " + IconLib.icons.previous + "\n          <span class=\"chapter-control\" id=\"previous-label\">Previous Chapter</span>\n          </a>\n        </li>\n        <li aria-label=\"chapters\">Chapters</li>\n        <li>\n          <a rel=\"next\" class=\"disabled\" role=\"button\" aria-labelledby=\"next-label\">\n            <span class=\"chapter-control\" id =\"next-label\">Next Chapter</span>\n            " + IconLib.icons.next + "\n          </a>\n        </li>\n      </ul>\n    </div>\n    <!-- /controls -->\n  </nav>\n";
+    var template = "\n  <nav class=\"publication\">\n    <div class=\"controls-trigger\">\n      <button class=\"trigger\" aria-haspopup=\"true\" aria-expanded=\"true\">\n        " + IconLib.icons.menu + "\n      </button>\n    </div>\n    <div class=\"controls\">\n        " + IconLib.icons.closeOriginal + "\n        " + IconLib.icons.checkOriginal + "\n      <a href=\"#settings-control\" class=\"scrolling-suggestion\" style=\"display: none\">\n          We recommend scrolling mode for use with screen readers and keyboard navigation.\n          Go to settings to switch to scrolling mode.\n      </a>\n      <ul class=\"links top active\">\n        <li>\n          <button class=\"contents disabled\" aria-labelledby=\"contents-label\" aria-haspopup=\"true\" aria-expanded=\"false\">\n            " + IconLib.icons.toc + "\n            " + IconLib.icons.closeDupe + "\n            <span class=\"setting-text contents\" id=\"contents-label\">Contents</span>\n          </button>\n          <div class=\"contents-view controls-view inactive\" aria-hidden=\"true\"></div>\n        </li>\n        <li>\n          <button id=\"games-control\" class=\"games\" aria-labelledby=\"games-label\" aria-expanded=\"false\" aria-haspopup=\"true\">\n            " + IconLib.icons.games + "\n            " + IconLib.icons.closeDupe + "\n            <span class=\"game-text games\" id=\"games-label\">Games</span>\n          </button>\n          <div class=\"games-view controls-view inactive\" aria-hidden=\"true\"></div>\n        </li>\n        <li>\n          <button id=\"settings-control\" class=\"settings\" aria-labelledby=\"settings-label\" aria-expanded=\"false\" aria-haspopup=\"true\">\n            " + IconLib.icons.settings + "\n            " + IconLib.icons.closeDupe + "\n            <span class=\"setting-text settings\" id=\"settings-label\">Settings</span>\n          </button>\n          <div class=\"settings-view controls-view inactive\" aria-hidden=\"true\"></div>\n        </li>\n      </ul>\n    </div>\n    <!-- /controls -->\n  </nav>\n  <main style=\"overflow: hidden\" tabindex=-1>\n    <div class=\"loading\" style=\"display:none;\">\n      " + IconLib.icons.loading + "\n    </div>\n    <div class=\"error\" style=\"display:none;\">\n      <span>\n        " + IconLib.icons.error + "\n      </span>\n      <span>There was an error loading this page.</span>\n      <button class=\"go-back\">Go back</button>\n      <button class=\"try-again\">Try again</button>\n    </div>\n    <div class=\"info top\">\n      <span class=\"book-title\"></span>\n    </div>\n    <iframe allowtransparency=\"true\" title=\"book text\" style=\"border:0; overflow: hidden;\"></iframe>\n    <div class=\"info bottom\">\n      <span class=\"chapter-position\"></span>\n      <span class=\"chapter-title\"></span>\n    </div>\n  </main>\n  <nav class=\"publication\">\n    <div class=\"controls\">\n      <ul class=\"links bottom active\">\n        <li>\n          <a rel=\"prev\" class=\"disabled\" role=\"button\" aria-labelledby=\"previous-label\">\n          " + IconLib.icons.previous + "\n          <span class=\"chapter-control\" id=\"previous-label\">Previous Chapter</span>\n          </a>\n        </li>\n        <li aria-label=\"chapters\">Chapters</li>\n        <li>\n          <a rel=\"next\" class=\"disabled\" role=\"button\" aria-labelledby=\"next-label\">\n            <span class=\"chapter-control\" id =\"next-label\">Next Chapter</span>\n            " + IconLib.icons.next + "\n          </a>\n        </li>\n      </ul>\n    </div>\n    <!-- /controls -->\n  </nav>\n";
     /** Class that shows webpub resources in an iframe, with navigation controls outside the iframe. */
     var IFrameNavigator = /** @class */ (function () {
-        function IFrameNavigator(store, cacher, settings, annotator, publisher, serif, sans, day, sepia, night, paginator, scroller, eventHandler, upLinkConfig, allowFullscreen) {
+        function IFrameNavigator(store, cacher, gameTypeAll, gameTypeChapter, gameTypeNone, gameTypePage, gameTypeParagraph, settings, annotator, publisher, serif, sans, day, sepia, night, paginator, scroller, eventHandler, upLinkConfig, allowFullscreen) {
             if (cacher === void 0) { cacher = null; }
             if (annotator === void 0) { annotator = null; }
             if (publisher === void 0) { publisher = null; }
@@ -1514,11 +1807,17 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
             if (eventHandler === void 0) { eventHandler = null; }
             if (upLinkConfig === void 0) { upLinkConfig = null; }
             if (allowFullscreen === void 0) { allowFullscreen = null; }
+            var _this = this;
             this.upLink = null;
             this.fullscreen = null;
             this.canFullscreen = document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled;
             this.store = store;
             this.cacher = cacher;
+            this.gameTypeAll = gameTypeAll;
+            this.gameTypeChapter = gameTypeChapter;
+            this.gameTypeNone = gameTypeNone;
+            this.gameTypePage = gameTypePage;
+            this.gameTypeParagraph = gameTypeParagraph;
             this.settings = settings;
             this.annotator = annotator;
             this.publisher = publisher;
@@ -1532,6 +1831,15 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
             this.eventHandler = eventHandler || new EventHandler_1.default();
             this.upLinkConfig = upLinkConfig;
             this.allowFullscreen = allowFullscreen;
+            this.observer = new IntersectionObserver(function (entry) {
+                entry.forEach(function (item) {
+                    if (item.intersectionRatio > 0) {
+                        var wordArray = item.target.textContent.split(' ');
+                        var sentence = _this.wordScramble(wordArray);
+                        item.target.textContent = sentence;
+                    }
+                });
+            });
         }
         IFrameNavigator.create = function (config) {
             return __awaiter(this, void 0, void 0, function () {
@@ -1539,7 +1847,7 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
-                            navigator = new this(config.store, config.cacher || null, config.settings, config.annotator || null, config.publisher || null, config.serif || null, config.sans || null, config.day || null, config.sepia || null, config.night || null, config.paginator || null, config.scroller || null, config.eventHandler || null, config.upLink || null, config.allowFullscreen || null);
+                            navigator = new this(config.store, config.cacher || null, config.gameTypeAll, config.gameTypeChapter, config.gameTypeNone, config.gameTypePage, config.gameTypeParagraph, config.settings, config.annotator || null, config.publisher || null, config.serif || null, config.sans || null, config.day || null, config.sepia || null, config.night || null, config.paginator || null, config.scroller || null, config.eventHandler || null, config.upLink || null, config.allowFullscreen || null);
                             return [4 /*yield*/, navigator.start(config.element, config.manifestUrl)];
                         case 1:
                             _a.sent();
@@ -1550,7 +1858,7 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
         };
         IFrameNavigator.prototype.start = function (element, manifestUrl) {
             return __awaiter(this, void 0, void 0, function () {
-                var settingsButtons, lastSettingsButton, err_2;
+                var settingsButtons, lastSettingsButton, gamesButtons, lastSettingsButton, err_2;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -1565,10 +1873,12 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
                             this.previousChapterLink = HTMLUtilities.findRequiredElement(element, "a[rel=prev]");
                             this.contentsControl = HTMLUtilities.findRequiredElement(element, "button.contents");
                             this.settingsControl = HTMLUtilities.findRequiredElement(element, "button.settings");
+                            this.gamesControl = HTMLUtilities.findRequiredElement(element, "button.games");
                             this.links = HTMLUtilities.findRequiredElement(element, "ul.links.top");
                             this.linksBottom = HTMLUtilities.findRequiredElement(element, "ul.links.bottom");
                             this.tocView = HTMLUtilities.findRequiredElement(element, ".contents-view");
                             this.settingsView = HTMLUtilities.findRequiredElement(element, ".settings-view");
+                            this.gamesView = HTMLUtilities.findRequiredElement(element, ".games-view");
                             this.loadingMessage = HTMLUtilities.findRequiredElement(element, "div[class=loading]");
                             this.errorMessage = HTMLUtilities.findRequiredElement(element, "div[class=error]");
                             this.tryAgainButton = HTMLUtilities.findRequiredElement(element, "button[class=try-again]");
@@ -1608,14 +1918,37 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
                             if (this.scroller) {
                                 this.scroller.bookElement = this.iframe;
                             }
+                            if (this.gameTypeAll) {
+                                this.gameTypeAll.bookElement = this.iframe;
+                            }
+                            if (this.gameTypeChapter) {
+                                this.gameTypeChapter.bookElement = this.iframe;
+                            }
+                            if (this.gameTypeNone) {
+                                this.gameTypeNone.bookElement = this.iframe;
+                            }
+                            if (this.gameTypePage) {
+                                this.gameTypePage.bookElement = this.iframe;
+                            }
+                            if (this.gameTypeParagraph) {
+                                this.gameTypeParagraph.bookElement = this.iframe;
+                            }
+                            this.settings.renderGameControls(this.gamesView);
+                            this.settings.onGameChange(this.updateGameType.bind(this));
                             this.settings.renderControls(this.settingsView);
                             this.settings.onFontChange(this.updateFont.bind(this));
+                            this.settings.onLetterSpacingChange(this.updateLetterSpacing.bind(this));
                             this.settings.onFontSizeChange(this.updateFontSize.bind(this));
                             this.settings.onViewChange(this.updateBookView.bind(this));
                             settingsButtons = this.settingsView.querySelectorAll("button");
                             if (settingsButtons && settingsButtons.length > 0) {
                                 lastSettingsButton = settingsButtons[settingsButtons.length - 1];
                                 this.setupModalFocusTrap(this.settingsView, this.settingsControl, lastSettingsButton);
+                            }
+                            gamesButtons = this.gamesView.querySelectorAll("button");
+                            if (gamesButtons && gamesButtons.length > 0) {
+                                lastSettingsButton = gamesButtons[gamesButtons.length - 1];
+                                this.setupModalFocusTrap(this.gamesView, this.gamesControl, lastSettingsButton);
                             }
                             if (this.cacher) {
                                 this.cacher.onStatusUpdate(this.updateOfflineCacheStatus.bind(this));
@@ -1628,6 +1961,7 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
                         case 2: return [2 /*return*/, _a.sent()];
                         case 3:
                             err_2 = _a.sent();
+                            console.log(err_2);
                             // There's a mismatch between the template and the selectors above,
                             // or we weren't able to insert the template in the element.
                             return [2 /*return*/, new Promise(function (_, reject) { return reject(err_2); }).catch(function () { })];
@@ -1650,6 +1984,8 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
             this.contentsControl.addEventListener("click", this.handleContentsClick.bind(this));
             this.settingsControl.addEventListener("click", this.handleSettingsClick.bind(this));
             this.settingsView.addEventListener("click", this.handleToggleLinksClick.bind(this));
+            this.gamesControl.addEventListener("click", this.handleGamesClick.bind(this));
+            this.gamesView.addEventListener("click", this.handleToggleLinksClick.bind(this));
             this.tryAgainButton.addEventListener("click", this.tryAgain.bind(this));
             this.goBackButton.addEventListener("click", this.goBack.bind(this));
             this.menuControl.addEventListener("click", this.handleToggleLinksClick.bind(this));
@@ -1657,6 +1993,8 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
             this.tocView.addEventListener("keydown", this.hideTOCOnEscape.bind(this));
             this.settingsControl.addEventListener("keydown", this.hideSettingsOnEscape.bind(this));
             this.settingsView.addEventListener("keydown", this.hideSettingsOnEscape.bind(this));
+            this.gamesControl.addEventListener("keydown", this.hideGamesOnEscape.bind(this));
+            this.gamesView.addEventListener("keydown", this.hideGamesOnEscape.bind(this));
             window.addEventListener("keydown", this.handleKeyboardNavigation.bind(this));
             if (this.allowFullscreen && this.canFullscreen) {
                 document.addEventListener("fullscreenchange", this.toggleFullscreenIcon.bind(this));
@@ -1707,10 +2045,16 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
             }
         };
         ;
+        IFrameNavigator.prototype.updateGameType = function () {
+            this.handleGameType();
+        };
         IFrameNavigator.prototype.updateFont = function () {
             this.handleResize();
         };
         IFrameNavigator.prototype.updateFontSize = function () {
+            this.handleResize();
+        };
+        IFrameNavigator.prototype.updateLetterSpacing = function () {
             this.handleResize();
         };
         IFrameNavigator.prototype.updateBookView = function () {
@@ -1923,6 +2267,7 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
                             return [2 /*return*/, new Promise(function (resolve) { return resolve(); })];
                         case 4:
                             err_3 = _a.sent();
+                            console.log(err_3);
                             this.abortOnError();
                             return [2 /*return*/, new Promise(function (_, reject) { return reject(err_3); }).catch(function () { })];
                         case 5: return [2 /*return*/];
@@ -1932,7 +2277,7 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
         };
         IFrameNavigator.prototype.handleIFrameLoad = function () {
             return __awaiter(this, void 0, void 0, function () {
-                var bookViewPosition, currentLocation, elementId, manifest, previous, next, chapterTitle, spineItem, tocItem, err_4;
+                var bookViewPosition, currentLocation, elementId, manifest, previous, next, chapterTitle, spineItem, tocItem, page, gameType, err_4;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -1940,19 +2285,23 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
                             this.showLoadingMessageAfterDelay();
                             _a.label = 1;
                         case 1:
-                            _a.trys.push([1, 5, , 6]);
+                            _a.trys.push([1, 6, , 7]);
                             this.hideTOC();
                             bookViewPosition = 0;
                             if (this.newPosition) {
                                 bookViewPosition = this.newPosition.position;
                                 this.newPosition = null;
                             }
+                            this.updateGameTypeInit();
                             this.updateFont();
                             this.updateFontSize();
+                            this.updateLetterSpacing();
                             this.updateBookView();
                             this.settings.getSelectedFont().start();
                             this.settings.getSelectedTheme().start();
                             this.settings.getSelectedView().start(bookViewPosition);
+                            this.settings.getSelectedGameType().start();
+                            HTMLUtilities.createStylesheet(this.iframe.contentDocument.querySelector('html'), 'game-styles', '.hover-element:hover { outline: 2px solid blue; cursor: pointer; }');
                             if (this.newElementId) {
                                 this.settings.getSelectedView().goToElement(this.newElementId);
                                 this.newElementId = null;
@@ -2017,21 +2366,29 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
                             if (this.eventHandler) {
                                 this.eventHandler.setupEvents(this.iframe.contentDocument);
                             }
-                            if (!this.annotator) return [3 /*break*/, 4];
+                            if (!this.annotator) return [3 /*break*/, 5];
                             return [4 /*yield*/, this.saveCurrentReadingPosition()];
                         case 3:
                             _a.sent();
-                            _a.label = 4;
+                            return [4 /*yield*/, this.annotator.getLastReadingPosition()];
                         case 4:
+                            page = _a.sent();
+                            gameType = this.settings.getSelectedGameType();
+                            if (page.position === 0 && gameType.name !== 'game-all') {
+                                this.settings.resetGameType(this.gameTypeNone);
+                            }
+                            _a.label = 5;
+                        case 5:
                             this.hideLoadingMessage();
                             this.showIframeContents();
                             Object.defineProperty(this.iframe.contentWindow.navigator, "epubReadingSystem", { value: epubReadingSystem, writable: false });
                             return [2 /*return*/, new Promise(function (resolve) { return resolve(); })];
-                        case 5:
+                        case 6:
                             err_4 = _a.sent();
+                            console.log(err_4);
                             this.abortOnError();
                             return [2 /*return*/, new Promise(function (_, reject) { return reject(err_4); }).catch(function () { })];
-                        case 6: return [2 /*return*/];
+                        case 7: return [2 /*return*/];
                     }
                 });
             });
@@ -2126,6 +2483,7 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
             }
             this.contentsControl.setAttribute("aria-hidden", "true");
             this.settingsControl.setAttribute("aria-hidden", "true");
+            this.gamesControl.setAttribute("aria-hidden", "true");
             this.linksBottom.setAttribute("aria-hidden", "true");
             this.loadingMessage.setAttribute("aria-hidden", "true");
             this.errorMessage.setAttribute("aria-hidden", "true");
@@ -2148,6 +2506,7 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
             }
             this.contentsControl.setAttribute("aria-hidden", "false");
             this.settingsControl.setAttribute("aria-hidden", "false");
+            this.gamesControl.setAttribute("aria-hidden", "false");
             this.linksBottom.setAttribute("aria-hidden", "false");
             this.loadingMessage.setAttribute("aria-hidden", "false");
             this.errorMessage.setAttribute("aria-hidden", "false");
@@ -2201,6 +2560,7 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
         };
         IFrameNavigator.prototype.handleToggleLinksClick = function (event) {
             this.hideTOC();
+            this.hideGames();
             this.hideSettings();
             this.toggleDisplay(this.links, this.menuControl);
             if (this.settings.getSelectedView() === this.scroller) {
@@ -2295,14 +2655,20 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
             var selectedView = this.settings.getSelectedView();
             var oldPosition = selectedView.getCurrentPosition();
             var fontSize = this.settings.getSelectedFontSize();
+            var letterSpacing = this.settings.getSelectedLetterSpacing();
             var body = HTMLUtilities.findRequiredIframeElement(this.iframe.contentDocument, "body");
             body.style.fontSize = fontSize;
+            body.style.letterSpacing = letterSpacing;
             body.style.lineHeight = "1.5";
             // Disable text selection as we can’t handle this correctly anyway
             body.style.webkitUserSelect = "none";
             body.style.MozUserSelect = "none";
             body.style.msUserSelect = "none";
             body.style.userSelect = "none";
+            var headingArray = body.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            for (var i = 0; i < headingArray.length; i++) {
+                headingArray[i].style.letterSpacing = letterSpacing;
+            }
             var fontSizeNumber = parseInt(fontSize.slice(0, -2));
             var sideMargin = fontSizeNumber * 2;
             if (BrowserUtilities.getWidth() > fontSizeNumber * 45) {
@@ -2344,6 +2710,146 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
             selectedView.goToPosition(oldPosition);
             this.updatePositionInfo();
         };
+        IFrameNavigator.prototype.updateGameTypeInit = function () {
+            var name = this.settings.getSelectedGameType().name;
+            if (name === 'game-all') {
+                var iframe = document.querySelector('iframe');
+                var body = iframe.contentDocument.querySelector('body');
+                var section = body.querySelector('section');
+                var children = Array.from(section && section.children && section.children.length > 0 ? section.children : []);
+                if (children.length > 0) {
+                    var sentenceArray_1 = [];
+                    for (var i = 0; i < children.length; i++) {
+                        var wordArray = children[i].textContent.split(' ');
+                        var sentence = this.wordScramble(wordArray);
+                        sentenceArray_1.push(sentence);
+                    }
+                    children.forEach(function (item, index) {
+                        item.textContent = sentenceArray_1[index];
+                    });
+                }
+            }
+        };
+        IFrameNavigator.prototype.wordScramble = function (wordArray) {
+            var allWords = [];
+            for (var j = 0; j < wordArray.length; j++) {
+                var words = wordArray[j].replace(/\b([a-z])([a-z]+)([a-z])\b/gi, function (m, p1, p2, p3) {
+                    if (m.length <= 3) {
+                        return m;
+                    }
+                    if (m.length === 4) {
+                        return p1 + p2.charAt(1) + p2.charAt(0) + p3;
+                    }
+                    var b = p2.split(/\B/);
+                    for (var i = b.length, j_1, k = void 0; i; j_1 = Math.round(Math.random() * i), k = b[--i], b[i] = b[j_1], b[j_1] = k)
+                        ;
+                    return p1 + b.join('') + p3;
+                });
+                allWords.push(words);
+            }
+            return allWords.join(' ');
+        };
+        IFrameNavigator.prototype.handleGameType = function () {
+            var _this = this;
+            var iframe = HTMLUtilities.findRequiredIframeElement(this.iframe.contentDocument, "body");
+            var section = iframe.querySelector('section');
+            var name = this.settings.getSelectedGameType().name;
+            var child = Array.from(section && section.children && section.children.length > 0 ? section.children : []);
+            function wordScramble(wordArray) {
+                var allWords = [];
+                for (var j = 0; j < wordArray.length; j++) {
+                    var words = wordArray[j].replace(/\b([a-z])([a-z]+)([a-z])\b/gi, function (m, p1, p2, p3) {
+                        if (m.length <= 3) {
+                            return m;
+                        }
+                        if (m.length === 4) {
+                            return p1 + p2.charAt(1) + p2.charAt(0) + p3;
+                        }
+                        var b = p2.split(/\B/);
+                        for (var i = b.length, j_2, k = void 0; i; j_2 = Math.round(Math.random() * i), k = b[--i], b[i] = b[j_2], b[j_2] = k)
+                            ;
+                        return p1 + b.join('') + p3;
+                    });
+                    allWords.push(words);
+                }
+                return allWords.join(' ');
+            }
+            if (child.length > 0) {
+                if (name === 'game-none') {
+                    child.forEach(function (element) {
+                        element.classList.remove('hover-element');
+                        element.removeEventListener('click', clickEvent);
+                    });
+                    window.location.reload();
+                }
+                else if (name === 'game-paragraph') {
+                    child.forEach(function (element) {
+                        element.classList.add('hover-element');
+                        element.addEventListener('click', clickEvent);
+                    });
+                }
+                else if (name === 'game-chapter') {
+                    var sentenceArray_2 = [];
+                    for (var i = 0; i < child.length; i++) {
+                        var wordArray = child[i].textContent.split(' ');
+                        var sentence = this.wordScramble(wordArray);
+                        sentenceArray_2.push(sentence);
+                    }
+                    child.forEach(function (item, index) {
+                        item.textContent = sentenceArray_2[index];
+                    });
+                }
+                else if (name === 'game-page') {
+                    child.forEach(function (element) {
+                        _this.observer.observe(element);
+                    });
+                }
+                else if (name === 'game-all') {
+                    this.updateGameTypeInit();
+                }
+                else {
+                    child.forEach(function (element) {
+                        element.addEventListener('click', clickEvent);
+                    });
+                }
+                setTimeout(function () {
+                    child.forEach(function (element) {
+                        _this.observer.unobserve(element);
+                    });
+                }, 2000);
+            }
+            function clickEvent(event) {
+                var iframe = document.querySelector('iframe');
+                var body = iframe.contentDocument.querySelector('body');
+                var section = body.querySelector('section');
+                var child1 = Array.from(section && section.children && section.children.length > 0 ? section.children : []);
+                if (child1.length > 0) {
+                    child1.forEach(function (element) {
+                        element.classList.remove('hover-element');
+                        element.removeEventListener('click', clickEvent);
+                    });
+                }
+                var element = event.currentTarget;
+                var children = Array.from(element && element.children && element.children.length > 0 ? element.children : []);
+                var regex = new RegExp(/h1|h2|h3|h4|h5|h6/g);
+                var data = regex.exec(element.tagName);
+                if (children.length > 0 && !data) {
+                    var sentenceArray_3 = [];
+                    for (var i = 0; i < children.length; i++) {
+                        var wordArray = children[i].textContent.split(' ');
+                        var sentence = wordScramble(wordArray);
+                        sentenceArray_3.push(sentence);
+                    }
+                    children.forEach(function (item, index) {
+                        item.textContent = sentenceArray_3[index];
+                    });
+                }
+                else if (element.innerText !== '') {
+                    var wordArray = element.innerText.split(' ');
+                    element.innerText = wordScramble(wordArray);
+                }
+            }
+        };
         IFrameNavigator.prototype.updatePositionInfo = function () {
             if (this.settings.getSelectedView() === this.paginator) {
                 var currentPage = Math.round(this.paginator.getCurrentPage());
@@ -2377,6 +2883,7 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
             event.stopPropagation();
         };
         IFrameNavigator.prototype.handleContentsClick = function (event) {
+            this.hideGames();
             this.hideSettings();
             this.toggleModal(this.tocView, this.contentsControl);
             // While the TOC is displayed, prevent scrolling in the book.
@@ -2414,8 +2921,16 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
                 activeItem.className = "active";
             }
         };
+        IFrameNavigator.prototype.handleGamesClick = function (event) {
+            this.hideTOC();
+            this.hideSettings();
+            this.toggleModal(this.gamesView, this.gamesControl);
+            event.preventDefault();
+            event.stopPropagation();
+        };
         IFrameNavigator.prototype.handleSettingsClick = function (event) {
             this.hideTOC();
+            this.hideGames();
             this.toggleModal(this.settingsView, this.settingsControl);
             event.preventDefault();
             event.stopPropagation();
@@ -2423,10 +2938,19 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
         IFrameNavigator.prototype.hideSettings = function () {
             this.hideModal(this.settingsView, this.settingsControl);
         };
+        IFrameNavigator.prototype.hideGames = function () {
+            this.hideModal(this.gamesView, this.gamesControl);
+        };
         IFrameNavigator.prototype.hideSettingsOnEscape = function (event) {
             var ESCAPE_KEY = 27;
             if (this.isDisplayed(this.settingsView) && event.keyCode === ESCAPE_KEY) {
                 this.hideSettings();
+            }
+        };
+        IFrameNavigator.prototype.hideGamesOnEscape = function (event) {
+            var ESCAPE_KEY = 27;
+            if (this.isDisplayed(this.gamesView) && event.keyCode === ESCAPE_KEY) {
+                this.hideGames();
             }
         };
         IFrameNavigator.prototype.navigate = function (readingPosition) {
@@ -2504,6 +3028,200 @@ define("IFrameNavigator", ["require", "exports", "Cacher", "Manifest", "EventHan
         return IFrameNavigator;
     }());
     exports.default = IFrameNavigator;
+});
+// Heavily inspired by https://github.com/GoogleChromeLabs/page-lifecycle
+define("Lifecycle", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    // Note: The module currently is using Event and Event Target shims by default, and doesn’t check if constructable events are supported
+    var EventShim = /** @class */ (function () {
+        function EventShim(type) {
+            this.type = type;
+        }
+        return EventShim;
+    }());
+    var EventTargetShim = /** @class */ (function () {
+        function EventTargetShim() {
+            this._registry = {};
+        }
+        EventTargetShim.prototype.addEventListener = function (type, listener) {
+            this.getRegistry(type).push(listener);
+        };
+        EventTargetShim.prototype.removeEventListener = function (type, listener) {
+            var typeRegistry = this.getRegistry(type);
+            var handlerIndex = typeRegistry.indexOf(listener);
+            if (handlerIndex > -1) {
+                typeRegistry.splice(handlerIndex, 1);
+            }
+        };
+        EventTargetShim.prototype.dispatchEvent = function (evt) {
+            evt.target = this;
+            Object.freeze(evt);
+            this.getRegistry(evt.type).forEach(function (listener) { return listener(evt); });
+            return true;
+        };
+        EventTargetShim.prototype.getRegistry = function (type) {
+            return this._registry[type] = (this._registry[type] || []);
+        };
+        return EventTargetShim;
+    }());
+    var StateChangeEvent = /** @class */ (function (_super) {
+        __extends(StateChangeEvent, _super);
+        function StateChangeEvent(type, initDict) {
+            var _this = _super.call(this, type) || this;
+            _this.newState = initDict.newState;
+            _this.oldState = initDict.oldState;
+            _this.originalEvent = initDict.originalEvent;
+            return _this;
+        }
+        return StateChangeEvent;
+    }(EventShim));
+    exports.StateChangeEvent = StateChangeEvent;
+    var SUPPORTS_PAGE_TRANSITION_EVENTS = "onpageshow" in self;
+    var IS_SAFARI = (typeof window.safari === "object" && window.safari.pushNotification);
+    var toIndexedObject = function (arr) { return arr.reduce(function (acc, val, idx) {
+        acc[val] = idx;
+        return acc;
+    }, {}); };
+    var Lifecycle = /** @class */ (function (_super) {
+        __extends(Lifecycle, _super);
+        function Lifecycle() {
+            var _this = _super.call(this) || this;
+            _this.getLegalStateTransitionPath = function (oldState, newState) {
+                for (var order = void 0, i = 0; order = Lifecycle.LEGAL_STATE_TRANSITIONS[i]; ++i) {
+                    var oldIndex = order[oldState];
+                    var newIndex = order[newState];
+                    if (oldIndex >= 0 &&
+                        newIndex >= 0 &&
+                        newIndex > oldIndex) {
+                        return Object.keys(order).slice(oldIndex, newIndex + 1);
+                    }
+                }
+                return [];
+            };
+            // Note: Model was simplified due to the lack of "passive" support
+            _this.getCurrentState = function () {
+                if (document.visibilityState === Lifecycle.HIDDEN) {
+                    return Lifecycle.HIDDEN;
+                }
+                return Lifecycle.ACTIVE;
+            };
+            _this._state = _this.getCurrentState();
+            _this.handleEvents = _this.handleEvents.bind(_this);
+            Lifecycle.EVENTS.forEach(function (evt) { return addEventListener(evt, _this.handleEvents, true); });
+            if (IS_SAFARI) {
+                addEventListener("beforeunload", function (evt) {
+                    _this._safariBeforeUnloadTimeout = setTimeout(function () {
+                        if (!(evt.defaultPrevented || !evt.returnValue)) {
+                            _this.dispatchChangesIfNeeded(evt, Lifecycle.HIDDEN);
+                        }
+                    }, 0);
+                });
+            }
+            return _this;
+        }
+        Object.defineProperty(Lifecycle.prototype, "state", {
+            get: function () {
+                return this._state;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Lifecycle.prototype, "pageWasDiscarded", {
+            get: function () {
+                return document.wasDiscarded || false;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Lifecycle.prototype.dispatchChangesIfNeeded = function (originalEvent, newState) {
+            if (newState !== this._state) {
+                var oldState = this._state;
+                var path = this.getLegalStateTransitionPath(oldState, newState);
+                for (var i = 0; i < path.length - 1; ++i) {
+                    var oldState_1 = path[i];
+                    var newState_1 = path[i + 1];
+                    this._state = newState_1;
+                    this.dispatchEvent(new StateChangeEvent("statechange", {
+                        oldState: oldState_1,
+                        newState: newState_1,
+                        originalEvent: originalEvent,
+                    }));
+                }
+            }
+        };
+        Lifecycle.prototype.handleEvents = function (evt) {
+            if (IS_SAFARI) {
+                clearTimeout(this._safariBeforeUnloadTimeout);
+            }
+            // Note: model was simplified due to the lack of "passive" support
+            switch (evt.type) {
+                case "pageshow":
+                case "resume":
+                    this.dispatchChangesIfNeeded(evt, this.getCurrentState());
+                    break;
+                case "focus":
+                    if (this._state !== Lifecycle.ACTIVE) {
+                        this.dispatchChangesIfNeeded(evt, Lifecycle.ACTIVE);
+                    }
+                    break;
+                case "blur":
+                    // The `blur` event can fire while the page is being unloaded, so we
+                    // only need to update the state if the current state is "active".
+                    if (this._state === Lifecycle.ACTIVE) {
+                        this.dispatchChangesIfNeeded(evt, this.getCurrentState());
+                    }
+                    break;
+                case "pagehide":
+                case "unload":
+                    this.dispatchChangesIfNeeded(evt, evt.persisted ? Lifecycle.FROZEN : Lifecycle.TERMINATED);
+                    break;
+                case "visibilitychange":
+                    // The document's `visibilityState` will change to hidden  as the page
+                    // is being unloaded, but in such cases the lifecycle state shouldn't
+                    // change.
+                    if (this._state !== Lifecycle.FROZEN &&
+                        this._state !== Lifecycle.TERMINATED) {
+                        this.dispatchChangesIfNeeded(evt, this.getCurrentState());
+                    }
+                    break;
+                case "freeze":
+                    this.dispatchChangesIfNeeded(evt, Lifecycle.FROZEN);
+                    break;
+            }
+        };
+        Lifecycle.ACTIVE = "active";
+        //  private static readonly PASSIVE = "passive";
+        Lifecycle.HIDDEN = "hidden";
+        Lifecycle.FROZEN = "frozen";
+        Lifecycle.TERMINATED = "terminated";
+        // Note: Passive is missing in the transitions below
+        Lifecycle.LEGAL_STATE_TRANSITIONS = [
+            // The normal unload process (bfcache process is addressed above).
+            [Lifecycle.ACTIVE, Lifecycle.HIDDEN, Lifecycle.TERMINATED],
+            // An active page transitioning to frozen,
+            // or an unloading page going into the bfcache.
+            [Lifecycle.ACTIVE, Lifecycle.HIDDEN, Lifecycle.FROZEN],
+            // A hidden page transitioning back to active.
+            [Lifecycle.HIDDEN, Lifecycle.ACTIVE],
+            // A frozen page being resumed
+            [Lifecycle.FROZEN, Lifecycle.HIDDEN],
+            // A frozen (bfcached) page navigated back to
+            // Note: [FROZEN, HIDDEN] can happen here, but it's already covered above.
+            [Lifecycle.FROZEN, Lifecycle.ACTIVE]
+        ].map(toIndexedObject);
+        Lifecycle.EVENTS = [
+            "focus",
+            "blur",
+            "visibilitychange",
+            "freeze",
+            "resume",
+            "pageshow",
+            SUPPORTS_PAGE_TRANSITION_EVENTS ? "pagehide" : "unload",
+        ];
+        return Lifecycle;
+    }(EventTargetShim));
+    exports.Lifecycle = Lifecycle;
 });
 define("LocalAnnotator", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -2809,12 +3527,12 @@ define("ServiceWorkerCacher", ["require", "exports", "Cacher", "Manifest"], func
     }());
     exports.default = ServiceWorkerCacher;
 });
-define("app", ["require", "exports", "LocalStorageStore", "ServiceWorkerCacher", "IFrameNavigator", "PublisherFont", "SerifFont", "SansFont", "DayTheme", "SepiaTheme", "NightTheme", "ColumnsPaginatedBookView", "ScrollingBookView", "BookSettings", "LocalAnnotator"], function (require, exports, LocalStorageStore_1, ServiceWorkerCacher_1, IFrameNavigator_1, PublisherFont_1, SerifFont_1, SansFont_1, DayTheme_1, SepiaTheme_1, NightTheme_1, ColumnsPaginatedBookView_1, ScrollingBookView_1, BookSettings_1, LocalAnnotator_1) {
+define("app", ["require", "exports", "LocalStorageStore", "ServiceWorkerCacher", "IFrameNavigator", "PublisherFont", "SerifFont", "SansFont", "DayTheme", "SepiaTheme", "NightTheme", "ColumnsPaginatedBookView", "ScrollingBookView", "BookSettings", "LocalAnnotator", "GameTypeAll", "GameTypeChapter", "GameTypeNone", "GameTypePage", "GameTypeParagraph"], function (require, exports, LocalStorageStore_1, ServiceWorkerCacher_1, IFrameNavigator_1, PublisherFont_1, SerifFont_1, SansFont_1, DayTheme_1, SepiaTheme_1, NightTheme_1, ColumnsPaginatedBookView_1, ScrollingBookView_1, BookSettings_1, LocalAnnotator_1, GameTypeAll_1, GameTypeChapter_1, GameTypeNone_1, GameTypePage_1, GameTypeParagraph_1) {
     "use strict";
     var _this = this;
     Object.defineProperty(exports, "__esModule", { value: true });
     var app = function (element, manifestUrl) { return __awaiter(_this, void 0, void 0, function () {
-        var bookStore, cacher, annotator, publisher, serif, sans, fontSizes, day, sepia, night, paginator, scroller, settingsStore, settings;
+        var bookStore, cacher, annotator, publisher, serif, sans, fontSizes, letterSpacings, day, sepia, night, paginator, scroller, settingsStore, gameTypeAll, gameTypeChapter, gameTypeNone, gameTypePage, gameTypeParagraph, settings;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -2825,17 +3543,32 @@ define("app", ["require", "exports", "LocalStorageStore", "ServiceWorkerCacher",
                     serif = new SerifFont_1.default();
                     sans = new SansFont_1.default();
                     fontSizes = [12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32];
+                    letterSpacings = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
                     day = new DayTheme_1.default();
                     sepia = new SepiaTheme_1.default();
                     night = new NightTheme_1.default();
                     paginator = new ColumnsPaginatedBookView_1.default();
                     scroller = new ScrollingBookView_1.default();
                     settingsStore = new LocalStorageStore_1.default({ prefix: "cassis-reader" });
+                    gameTypeAll = new GameTypeAll_1.default();
+                    gameTypeChapter = new GameTypeChapter_1.default();
+                    gameTypeNone = new GameTypeNone_1.default();
+                    gameTypePage = new GameTypePage_1.default();
+                    gameTypeParagraph = new GameTypeParagraph_1.default();
                     return [4 /*yield*/, BookSettings_1.default.create({
                             store: settingsStore,
+                            gameTypes: [
+                                gameTypeNone,
+                                gameTypeChapter,
+                                gameTypePage,
+                                gameTypeParagraph,
+                                gameTypeAll
+                            ],
                             bookFonts: [publisher, serif, sans],
                             fontSizesInPixels: fontSizes,
+                            letterSpacingInPixels: letterSpacings,
                             defaultFontSizeInPixels: 20,
+                            defaultLetterSpacingInPixels: 0,
                             bookThemes: [day, sepia, night],
                             bookViews: [paginator, scroller]
                         })];
@@ -2844,6 +3577,11 @@ define("app", ["require", "exports", "LocalStorageStore", "ServiceWorkerCacher",
                     return [4 /*yield*/, IFrameNavigator_1.default.create({
                             element: element,
                             manifestUrl: manifestUrl,
+                            gameTypeAll: gameTypeAll,
+                            gameTypeChapter: gameTypeChapter,
+                            gameTypeNone: gameTypeNone,
+                            gameTypePage: gameTypePage,
+                            gameTypeParagraph: gameTypeParagraph,
                             store: bookStore,
                             cacher: cacher,
                             settings: settings,

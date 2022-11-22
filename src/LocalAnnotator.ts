@@ -20,7 +20,7 @@ export default class LocalAnnotator implements Annotator {
             const position = JSON.parse(positionString);
             return new Promise(resolve => resolve(position));
         }
-        return new Promise(resolve => resolve());
+        return new Promise<void>(resolve => resolve());
     }
 
     public async saveLastReadingPosition(position: any): Promise<void> {

@@ -4,6 +4,7 @@ import BookFont from "./BookFont";
 import * as HTMLUtilities from "./HTMLUtilities";
 import Store from "./Store";
 import * as IconLib from "./IconLib";
+import GameType from './Games';
 
 const template = (sections: string) => `
     <ul class="settings-menu" role="menu">
@@ -18,6 +19,22 @@ const sectionTemplate = (options: string) => `
 `;
 
 const optionTemplate = (liClassName: string, buttonClassName: string, label: string, role: string, svgIcon: string, buttonId: string) => `
+    <li class='${liClassName}'><button id='${buttonId}' class='${buttonClassName}' role='${role}' tabindex=-1>${label}${svgIcon}</button></li>
+`;
+
+const templateGame = (sections: string) => `
+    <ul class="games-menu" role="menu">
+        ${sections}
+    </ul>
+`;
+
+const sectionTemplateGame = (options: string) => `
+    <li><ul class="games-options">
+        ${options}
+    </ul></li>
+`;
+
+const optionTemplateGame = (liClassName: string, buttonClassName: string, label: string, role: string, svgIcon: string, buttonId: string) => `
     <li class='${liClassName}'><button id='${buttonId}' class='${buttonClassName}' role='${role}' tabindex=-1>${label}${svgIcon}</button></li>
 `;
 
@@ -37,14 +54,23 @@ export interface BookSettingsConfig {
     /** Array of font sizes in pixels sorted from smallest to largest. */
     fontSizesInPixels: number[],
 
+    /** Array of letter spacing in pixels sorted from smallest to largest. */
+    letterSpacingInPixels: number[],
+
     /** Initial font size to use until the user makes a selection. */
     defaultFontSizeInPixels?: number,
+
+    /** Initial letter spacing to use until the user makes a selection. */
+    defaultLetterSpacingInPixels?: number,
 
     /** Array of BookThemes */
     bookThemes: BookTheme[],
 
     /** Array of BookViews. */
     bookViews: BookView[];
+
+    /** Array of Game Types */
+    gameTypes: GameType[];
 }
 
 export default class BookSettings {
@@ -53,44 +79,60 @@ export default class BookSettings {
     private fontButtons: { [key: string]: HTMLButtonElement };
     private readonly fontSizes: string[];
     private fontSizeButtons: { [key: string]: HTMLButtonElement };
+    private readonly letterSpacings: string[];
+    private letterSpacingButtons: { [key: string]: HTMLButtonElement };
     private readonly bookThemes: BookTheme[];
     private themeButtons: { [key: string]: HTMLButtonElement };
     private readonly bookViews: BookView[];
     private viewButtons: { [key: string]: HTMLButtonElement };
+    private readonly gameTypes: GameType[];
+    private gameButtons: { [key: string]: HTMLButtonElement };
 
     private offlineStatusElement: HTMLElement;
 
     private fontChangeCallback: () => void = () => {};
     private fontSizeChangeCallback: () => void = () => {};
+    private letterSpacingChangeCallback: () => void = () => {};
     private themeChangeCallback: () => void = () => {};
     private viewChangeCallback: () => void = () => {};
+    private gameChangeCallback: () => void = () => {};
 
     private selectedFont: BookFont;
     private selectedFontSize: string;
+    private selectedLetterSpacing: string;
     private selectedTheme: BookTheme;
     private selectedView: BookView;
+    private selectedType: GameType;
 
     private static readonly SELECTED_FONT_KEY = "settings-selected-font";
     private static readonly SELECTED_FONT_SIZE_KEY = "settings-selected-font-size";
+    private static readonly SELECTED_LETTER_SPACING_KEY = "settings-selected-letter-spacing";
     private static readonly SELECTED_THEME_KEY = "settings-selected-theme";
     private static readonly SELECTED_VIEW_KEY = "settings-selected-view";
+    private static readonly SELECTED_GAME_KEY = 'games-selected-type';
 
     public static async create(config: BookSettingsConfig) {
         const fontSizes = config.fontSizesInPixels.map(fontSize => fontSize + "px");
-        const settings = new this(config.store, config.bookFonts, fontSizes, config.bookThemes, config.bookViews);
-        await settings.initializeSelections(config.defaultFontSizeInPixels ? config.defaultFontSizeInPixels + "px" : undefined);
+        const letterSpacing = config.letterSpacingInPixels.map(spacing => spacing + "px");
+        const settings = new this(config.store, config.bookFonts, fontSizes, letterSpacing, config.bookThemes, config.bookViews, config.gameTypes);
+        await settings.initializeSelections(
+          config.defaultFontSizeInPixels ? config.defaultFontSizeInPixels + "px" : undefined,
+          config.defaultLetterSpacingInPixels ? config.defaultLetterSpacingInPixels + "px" : undefined
+        );
         return settings;
     }
 
-    protected constructor(store: Store, bookFonts: BookFont[], fontSizes: string[], bookThemes: BookTheme[], bookViews: BookView[]) {
+    protected constructor(store: Store, bookFonts: BookFont[], fontSizes: string[], letterSpacings: string[], bookThemes: BookTheme[], bookViews: BookView[], gameTypes: GameType[]) {
         this.store = store;
         this.bookFonts = bookFonts;
         this.fontSizes = fontSizes;
+        this.letterSpacings = letterSpacings;
         this.bookThemes = bookThemes;
         this.bookViews = bookViews;
+        this.gameTypes = gameTypes;
     }
 
-    private async initializeSelections(defaultFontSize?: string): Promise<void> {
+    private async initializeSelections(defaultFontSize?: string, defaultLetterSpacing?: string): Promise<void> {
         if (this.bookFonts.length >= 1) {
             let selectedFont = this.bookFonts[0];
             const selectedFontName = await this.store.get(BookSettings.SELECTED_FONT_KEY);
@@ -122,6 +164,22 @@ export default class BookSettings {
             this.selectedFontSize = selectedFontSize;
         }
 
+        if (this.letterSpacings.length >= 1) {
+            // First, check if the user has previously set a letter spacing.
+            let selectedLetterSpacing = await this.store.get(BookSettings.SELECTED_LETTER_SPACING_KEY);
+            let selectedLetterSpacingIsAvailable = (selectedLetterSpacing && this.letterSpacings.indexOf(selectedLetterSpacing) !== -1);
+            // If not, or the user selected a size that's no longer an option, is there a default letter spacing?
+            if ((!selectedLetterSpacing || !selectedLetterSpacingIsAvailable) && defaultLetterSpacing) {
+                selectedLetterSpacing = defaultLetterSpacing;
+                selectedLetterSpacingIsAvailable = (selectedLetterSpacing && this.letterSpacings.indexOf(selectedLetterSpacing) !== -1);
+            }
+            // If there's no selection and no default, pick a letter spacing in the middle of the options.
+            if (!selectedLetterSpacing || !selectedLetterSpacingIsAvailable) {
+                selectedLetterSpacing = this.letterSpacings[0];
+            }
+            this.selectedLetterSpacing = selectedLetterSpacing;
+        }
+
         if (this.bookThemes.length >= 1) {
             let selectedTheme = this.bookThemes[0];
             const selectedThemeName = await this.store.get(BookSettings.SELECTED_THEME_KEY);
@@ -149,6 +207,20 @@ export default class BookSettings {
             }
             this.selectedView = selectedView;
         }
+
+        if (this.gameTypes.length >= 1) {
+            let selectedType = this.gameTypes[0];
+            const selectedGameType = await this.store.get(BookSettings.SELECTED_GAME_KEY);
+            if (selectedGameType && selectedGameType === 'game-all') {
+                for (const gameType of this.gameTypes) {
+                    if (gameType.name === selectedGameType) {
+                        selectedType = gameType;
+                        break;
+                    }
+                }
+            }
+            this.selectedType = selectedType;
+        }
     }
 
     public renderControls(element: HTMLElement): void {
@@ -162,8 +234,13 @@ export default class BookSettings {
         }
 
         if (this.fontSizes.length > 1) {
-            const fontSizeOptions = optionTemplate("font-setting", "decrease", "A-", "menuitem", "", "decrease-font") + optionTemplate("font-setting", "increase", "A+", "menuitem", "", "increase-font");
+            const fontSizeOptions = optionTemplate("font-setting", "decrease", "SIZE-", "menuitem", "", "decrease-font") + optionTemplate("font-setting", "increase", "SIZE+", "menuitem", "", "increase-font");
             sections.push(sectionTemplate(fontSizeOptions));
+        }
+
+        if (this.letterSpacings.length > 1) {
+          const letterSpacingOptions = optionTemplate("font-setting-spacing", "decrease-spacing", "SPACE-", "menuitem", "", "decrease-spacing") + optionTemplate("font-setting-spacing", "increase-spacing", "SPACE+", "menuitem", "", "increase-spacing");
+          sections.push(sectionTemplate(letterSpacingOptions));
         }
 
         if (this.bookThemes.length > 1) {
@@ -197,6 +274,13 @@ export default class BookSettings {
             }
             this.updateFontSizeButtons();
         }
+        this.letterSpacingButtons = {};
+        if (this.letterSpacings.length > 1) {
+            for (const letterSpacingName of ["decrease-spacing", "increase-spacing"]) {
+                this.letterSpacingButtons[letterSpacingName] = HTMLUtilities.findRequiredElement(element, "button[class=" + letterSpacingName + "]") as HTMLButtonElement;
+            }
+            this.updateLetterSpacingButtons();
+        }
         this.themeButtons = {};
         if (this.bookThemes.length > 1) {
             for (const bookTheme of this.bookThemes) {
@@ -222,12 +306,40 @@ export default class BookSettings {
         });
     }
 
+    public renderGameControls(element: HTMLElement): void {
+        const sections = [];
+
+        if (this.gameTypes && this.gameTypes.length > 1) {
+          const gameOptions = this.gameTypes.map((gameType) => 
+            optionTemplateGame('game-types', gameType.name, gameType.label, 'menuitem', IconLib.icons.checkDupe, gameType.name)
+          );
+          sections.push(sectionTemplateGame(gameOptions.join('')));
+        }
+
+        element.innerHTML = templateGame(sections.join(''));
+
+        this.gameButtons = {};
+        if (this.gameTypes.length > 1) {
+          for (const gameType of this.gameTypes) {
+            this.gameButtons[gameType.name] = HTMLUtilities.findRequiredElement(
+              element,
+              'button[class=' + gameType.name + ']'
+            ) as HTMLButtonElement;
+          }
+          this.updateGameButtons();
+        }
+    }
+
     public onFontChange(callback: () => void) {
         this.fontChangeCallback = callback;
     }
 
     public onFontSizeChange(callback: () => void) {
         this.fontSizeChangeCallback = callback;
+    }
+
+    public onLetterSpacingChange(callback: () => void) {
+      this.letterSpacingChangeCallback = callback;
     }
 
     public onThemeChange(callback: () => void) {
@@ -238,6 +350,10 @@ export default class BookSettings {
         this.viewChangeCallback = callback;
     }
 
+    public onGameChange(callback: () => void) {
+        this.gameChangeCallback = callback;
+    }
+  
     private setupEvents(): void {
         for (const font of this.bookFonts) {
             const button = this.fontButtons[font.name];
@@ -280,6 +396,32 @@ export default class BookSettings {
             });
         }
 
+        if (this.letterSpacings.length > 1) {
+          this.letterSpacingButtons["decrease-spacing"].addEventListener("click", (event: MouseEvent) => {
+              const currentLetterSpacingIndex = this.letterSpacings.indexOf(this.selectedLetterSpacing);
+              if (currentLetterSpacingIndex > 0) {
+                  const newLetterSpacing = this.letterSpacings[currentLetterSpacingIndex - 1];
+                  this.selectedLetterSpacing = newLetterSpacing;
+                  this.letterSpacingChangeCallback();
+                  this.updateLetterSpacingButtons();
+                  this.storeSelectedLetterSpacing(newLetterSpacing);
+              }
+              event.preventDefault();
+          });
+
+          this.letterSpacingButtons["increase-spacing"].addEventListener("click", (event: MouseEvent) => {
+              const currentLetterSpacingIndex = this.letterSpacings.indexOf(this.selectedLetterSpacing);
+              if (currentLetterSpacingIndex < this.letterSpacings.length - 1) {
+                  const newLetterSpacing = this.letterSpacings[currentLetterSpacingIndex + 1];
+                  this.selectedLetterSpacing = newLetterSpacing;
+                  this.letterSpacingChangeCallback();
+                  this.updateLetterSpacingButtons();
+                  this.storeSelectedLetterSpacing(newLetterSpacing);
+              }
+              event.preventDefault();
+          });
+        }
+
         for (const theme of this.bookThemes) {
             const button = this.themeButtons[theme.name];
             if (button) {
@@ -306,6 +448,21 @@ export default class BookSettings {
                     this.updateViewButtons();
                     this.storeSelectedView(view);
                     this.viewChangeCallback();
+                    event.preventDefault();
+                });
+            }
+        }
+
+        for (const gameType of this.gameTypes) {
+            const button = this.gameButtons[gameType.name];
+            if (button) {
+                button.addEventListener('click', (event: MouseEvent) => {
+                    this.selectedType.stop();
+                    gameType.start();
+                    this.selectedType = gameType;
+                    this.updateGameButtons();
+                    this.storeSelectedGameType(gameType);
+                    this.gameChangeCallback();
                     event.preventDefault();
                 });
             }
@@ -340,6 +497,22 @@ export default class BookSettings {
         }
     }
 
+    private updateLetterSpacingButtons(): void {
+      const currentLetterSpacingIndex = this.letterSpacings.indexOf(this.selectedLetterSpacing);
+
+      if (currentLetterSpacingIndex === 0) {
+          this.letterSpacingButtons["decrease-spacing"].className = "decrease-spacing disabled";
+      } else {
+          this.letterSpacingButtons["decrease-spacing"].className = "decrease-spacing";
+      }
+
+      if (currentLetterSpacingIndex === this.letterSpacings.length - 1) {
+          this.letterSpacingButtons["increase-spacing"].className = "increase-spacing disabled";
+      } else {
+          this.letterSpacingButtons["increase-spacing"].className = "increase-spacing";
+      }
+    }
+
     private updateThemeButtons(): void {
         for (const theme of this.bookThemes) {
             if (theme === this.selectedTheme) {
@@ -364,6 +537,26 @@ export default class BookSettings {
         }
     }
 
+    private updateGameButtons(): void {
+        for (const gameType of this.gameTypes) {
+            if (gameType === this.selectedType) {
+                this.gameButtons[gameType.name].className = gameType.name + " active";
+                this.gameButtons[gameType.name].setAttribute("aria-label", gameType.label + " mode enabled");
+            } else {
+                this.gameButtons[gameType.name].className = gameType.name;
+                this.gameButtons[gameType.name].setAttribute("aria-label", gameType.label + " mode disabled");
+            }
+        }
+    }
+
+    public resetGameType(gameType: GameType): void {
+        this.selectedType.stop();
+        gameType.start();
+        this.selectedType = gameType;
+        this.updateGameButtons();
+        this.storeSelectedGameType(gameType);
+    }
+
     public getSelectedFont(): BookFont {
         return this.selectedFont;
     }
@@ -372,12 +565,20 @@ export default class BookSettings {
         return this.selectedFontSize;
     }
 
+    public getSelectedLetterSpacing(): string {
+      return this.selectedLetterSpacing;
+    }
+
     public getSelectedTheme(): BookTheme {
         return this.selectedTheme;
     }
 
     public getSelectedView(): BookView {
         return this.selectedView;
+    }
+
+    public getSelectedGameType(): GameType {
+        return this.selectedType;
     }
 
     public getOfflineStatusElement(): HTMLElement {
@@ -392,11 +593,19 @@ export default class BookSettings {
         return this.store.set(BookSettings.SELECTED_FONT_SIZE_KEY, fontSize);
     }
 
+    private async storeSelectedLetterSpacing(letterSpacing: string): Promise<void> {
+      return this.store.set(BookSettings.SELECTED_LETTER_SPACING_KEY, letterSpacing);
+    }
+
     private async storeSelectedTheme(theme: BookTheme): Promise<void> {
         return this.store.set(BookSettings.SELECTED_THEME_KEY, theme.name);
     }
 
     private async storeSelectedView(view: BookView): Promise<void> {
         return this.store.set(BookSettings.SELECTED_VIEW_KEY, view.name);
+    }
+
+    private async storeSelectedGameType(gameType: GameType): Promise<void> {
+        return this.store.set(BookSettings.SELECTED_GAME_KEY, gameType.name);
     }
 };

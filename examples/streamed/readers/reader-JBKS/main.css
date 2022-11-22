@@ -110,6 +110,7 @@ a {
   height: 0;
   width: 0;
 }
+.controls .links .game-text,
 .controls .links .setting-text {
   display: none;
   position: relative;
@@ -117,6 +118,7 @@ a {
   top: -0.4rem;
 }
 @media screen and (min-width: 30rem) {
+  .controls .links .game-text,
   .controls .links .setting-text {
     display: inline-block;
     font-size: 0.9rem;
@@ -151,7 +153,6 @@ a {
   margin-right: auto;
 }
 .controls .links.top > li:last-child {
-  margin-right: 0.625rem;
   margin-right: 2.85rem;
 }
 .controls .links.bottom {
@@ -709,6 +710,24 @@ iframe.right-hover {
   border-left: 0;
   border-right: 0;
 }
+.settings-view > .settings-menu .settings-options button.decrease-spacing {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-left: 0;
+}
+.settings-view > .settings-menu .settings-options button.increase-spacing {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 0;
+  border-right: 0;
+}
+.settings-view > .settings-menu .settings-options button.decrease.disabled,
+.settings-view > .settings-menu .settings-options button.increase.disabled,
+.settings-view > .settings-menu .settings-options button.decrease-spacing.disabled,
+.settings-view > .settings-menu .settings-options button.increase-spacing.disabled {
+  background-color: lightgrey;
+  cursor: not-allowed;
+}
 .settings-view > .settings-menu .settings-options button.day-theme {
   background-color: #fff;
   border-top-right-radius: 0;
@@ -802,6 +821,129 @@ iframe.right-hover {
 [data-viewer-theme=night] .settings-view > .settings-menu .settings-options .icon {
   color: #fff;
   fill: #fff;
+}
+
+.games-view {
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  left: -10rem;
+}
+@media (max-width: 30rem) {
+  .games-view {
+    left: -3rem;
+  }
+}
+.games-view > .games-menu {
+  background-color: #f9f9f9;
+  border: 0.0625rem solid #DADADA;
+  border-radius: 0.375rem;
+  box-shadow: 0 0 4px 1px rgba(218, 218, 218, 0.5);
+  right: 0;
+  margin: 0 0.25rem;
+  padding: 0;
+  position: absolute;
+  min-width: 150px;
+  width: 150px;
+  max-height: 90vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+}
+.games-view > .games-menu button {
+  background-color: #fff;
+  border: 0.0625rem solid #DADADA;
+  font-size: 0.75rem;
+  letter-spacing: 0.07rem;
+  padding: 0.5rem 1.5rem;
+  text-transform: uppercase;
+  margin: 0;
+  position: relative;
+}
+.games-view > .games-menu button svg.checkedIcon {
+  color: #fff;
+  display: none;
+  fill: #fff;
+  height: 0.9rem;
+  width: 0.9rem;
+}
+.games-view > .games-menu button.active {
+  color: #fff;
+  background-color: #468028;
+}
+.games-view > .games-menu button.active svg.checkedIcon {
+  display: inline-block;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-55%);
+  right: 0.35rem;
+  vertical-align: text-bottom;
+}
+.games-view > .games-menu > li {
+  border: 0;
+  background-color: #fff;
+  color: #5B5852;
+  display: block;
+  margin: 0.5rem 0;
+  padding: 0;
+  text-align: center;
+}
+.games-view > .games-menu .games-options {
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.games-view > .games-menu .games-options li {
+  border: 0;
+  display: flex;
+  margin: 0;
+  width: auto;
+  flex: 1 1 auto;
+}
+.games-view > .games-menu .games-options li button {
+  width: 100%;
+  text-overflow: ellipsis;
+  text-align: start;
+}
+.games-view > .games-menu .games-options .icon {
+  color: #5B5852;
+  fill: #5B5852;
+  height: 1.75rem;
+  width: 1.75rem;
+}
+@media (min-width: 30rem) {
+  .games-view > .games-menu .games-options .icon {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+}
+
+[data-viewer-theme=night] .games-view > .games-menu {
+  background-color: #111;
+  border: 0.0625rem solid #5B5852;
+  box-shadow: 0 0 4px 1px rgba(218, 218, 218, 0.5);
+}
+[data-viewer-theme=night] .games-view > .games-menu button {
+  background-color: #2b2b2b;
+  border: 0.0625rem solid #8e8e8e;
+}
+[data-viewer-theme=night] .games-view > .games-menu button svg.checkedIcon {
+  color: #111;
+  fill: #111;
+}
+[data-viewer-theme=night] .games-view > .games-menu button.active {
+  color: #fff;
+  background-color: #468028;
+}
+[data-viewer-theme=night] .games-view > .games-menu > li {
+  border: 0;
+  background-color: #2b2b2b;
+  color: #fff;
 }
 
 /*# sourceMappingURL=main.css.map */
